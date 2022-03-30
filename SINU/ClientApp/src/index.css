@@ -1,0 +1,218 @@
+body {
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 auto;
+}
+
+/* Content */
+.container {
+  height: 800px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+}
+.studentContainer {
+  height: 100%;
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: RED;
+  transition: width 3.4s;
+}
+
+.welcomeContainer {
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+#studentContainer.open {
+  width: 150%;
+}
+.teacherContainer {
+  height: 100%;
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: BLUE;
+  transition: width 3.4s;
+}
+#teacherContainer.open {
+  width: 150%;
+}
+.studentText {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 70px;
+  background-color: transparent;
+}
+.teacherText {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 70px;
+  background-color: transparent;
+}
+.loginRegister {
+  width: auto;
+  height: auto;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+/* End of Content*/
+
+/* FORM Login*/
+
+.modal {
+  height: auto;
+  width: 30%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 6px;
+  background-color: white;
+  z-index: 10;
+  position: fixed;
+}
+form {
+  height: auto;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.13);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 25px 40px;
+}
+form * {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+.email-modal {
+  display: block;
+  height: 50px;
+  width: 384px;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  margin-top: 8px;
+  padding-left: 12px ;
+  font-size: 16px;
+  font-weight: 300;
+  border: 2px solid transparent;
+}
+::placeholder {
+  color: #e5e5e5;
+  opacity: 0.5;
+}
+.email-modal:active,:focus-visible {
+  border: 2px solid white;
+}
+.password-modal {
+  display: block;
+  height: 50px;
+  width: 384px;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  margin-top: 8px;
+  padding-left: 12px ;
+  font-size: 16px;
+  font-weight: 300;
+  border: 2px solid transparent;
+}
+::placeholder {
+  color: #e5e5e5;
+  opacity: 0.5;
+}
+.password-modal:active,:focus-visible {
+  border: 2px solid white;
+}
+.forgot-password{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 100;
+  border: 0;
+}
+.button-login{
+    display: block;
+    height: 50px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 300;
+    background-color: rgb(23, 23, 238);
+    border-radius: 3px;
+    border: 0;
+    padding: 0 10px;
+    margin-top: 8px;  
+}
+.button-login:hover{
+  background-color: rgb(16, 16, 197);
+  cursor: pointer;
+}
+/*End of  Login*/
+
+/*Register*/
+
+/*End of Register*/
+.modalRegister {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 30rem;
+  z-index: 10;
+  position: fixed;
+  top: 20vh;
+  left: calc(50% - 15rem);
+  transition: width 2s, height 2s;
+}
+
+.backdrop {
+  position: fixed;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.75);
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+studentHome{
+  background-color: red;
+}
+
+
