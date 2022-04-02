@@ -9,15 +9,15 @@ namespace SINU.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserRepository _repository;
-        public UsersController(IUserRepository repository)
+        private readonly IUsersRepository usersRepository;
+        public UsersController(IUsersRepository usersRepository)
         {
-            _repository = repository;
+            this.usersRepository = usersRepository;
         }
         [HttpGet]
         public List<User> GetAll()
         {
-            return _repository.GetAll();
+            return usersRepository.GetAll();
         }
     }
 }

@@ -16,11 +16,11 @@ namespace SINU.Controllers
     public class AuthController : ControllerBase
     {
 
-        private readonly IUserRepository _repository;
+        private readonly IUsersRepository usersRepository;
 
-        public AuthController(IUserRepository repository)
+        public AuthController(IUsersRepository usersRepository)
         {
-            _repository = repository;
+            this.usersRepository = usersRepository;
         }
 
         [HttpPost("register")]
@@ -35,7 +35,7 @@ namespace SINU.Controllers
                 Email = dto.Email
             };
 
-            if (_repository.Register(user) !=null)
+            if (usersRepository.Register(user) !=null)
             {
                 return Ok("success");
             } else
@@ -48,7 +48,7 @@ namespace SINU.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginDTO dto)
         {
-            var user = _repository.GetUserByEmail(dto.Email);
+            var user = usersRepository.GetUserByEmail(dto.Email);
             if (user == null) return NotFound(new { message = $"User with email {dto.Email} not found." });
             if (user.Password != dto.Password) return BadRequest(new { message = "Incorrect password." });
             return Ok(user);

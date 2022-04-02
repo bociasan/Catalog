@@ -3,7 +3,7 @@ using SINU.Model;
 
 namespace SINU.Repository
 {
-    public interface ISubjectClassRepository
+    public interface ISubjectsClassRepository
     {
         SubjectClass GetSubjectClassById(int id);
         List<SubjectClass> GetAll();

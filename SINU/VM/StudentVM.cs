@@ -6,10 +6,12 @@ namespace SINU.VM
     {
         public int Id { get; set; }
         public int ClassId { get; set; }
+        public string ClassName { get; set; }
         public int UserId { get; set; }
-        public int StudyYearId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public int StudyYearId { get; set; }
+        public string StudyYearName { get; set; }
 
         public StudentVM()
         {

@@ -28,15 +28,16 @@ namespace SINU
             services.AddDbContext<AppDbContext>(
             options => options.UseSqlServer(Configuration.GetConnectionString("SINUAppCon")));
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<ITeacherRepository, TeacherRepository>();
-            services.AddScoped<IClassRepository, ClassRepository>();
-            services.AddScoped<ISubjectRepository, SubjectRepository>();
-            //services.AddScoped<IStudyYearRepository, StudyYearRepository>();
-            services.AddScoped<ISubjectClassRepository, SubjectClassRepository>();
-            //services.AddScoped<ISubjectProfesorRepository, SubjectProfesorRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IStudentsRepository, StudentsRepository>();
+            //services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IClassesRepository, ClassesRepository>();
+            services.AddScoped<ISubjectsRepository, SubjectsRepository>();
+            services.AddScoped<IStudyYearsRepository, StudyYearsRepository>();
+            services.AddScoped<ISubjectsClassRepository, SubjectsClassRepository>();
+            services.AddScoped<ISubjectsProfesorRepository, SubjectsProfesorRepository>();
             //services.AddScoped<ISubjectStudentRepository, SubjectStudentRepository>();
+            services.AddScoped<IGradesRepository, GradesRepository>();
 
 
 

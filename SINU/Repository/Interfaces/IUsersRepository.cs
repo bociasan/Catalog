@@ -7,12 +7,14 @@ using SINU.DTO;
 
 namespace SINU.Repository
 { 
-    public interface IUserRepository
+    public interface IUsersRepository
     {
+        User GetUserById(int id);
         User GetUserByEmail(string email);
         User GetUserByUsername(string Username);
         User Register(RegisterDTO registerDTO);
         User Register(User user);
         List<User> GetAll();
+        List<User> GetTeachers();
     }
 }

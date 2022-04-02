@@ -10,23 +10,23 @@ namespace SINU.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly IStudentRepository _repository;
+        private readonly IStudentsRepository studentsRepository;
 
-        public StudentsController(IStudentRepository repository)
+        public StudentsController(IStudentsRepository studentsRepository)
         {
-            _repository = repository;
+            this.studentsRepository = studentsRepository;
         }
 
         [HttpGet]
         public List<Student> Get()
         {
-            return _repository.GetAll();
+            return studentsRepository.GetAll();
         }
 
         [HttpGet("{id}")]
         public Student Get(int id)
         {
-            return _repository.GetStudentById(id);
+            return studentsRepository.GetStudentById(id);
         }
 
         //[HttpPost]

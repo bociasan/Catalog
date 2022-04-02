@@ -5,12 +5,12 @@ using SINU.Model;
 
 namespace SINU.Repository
 {
-    public class SubjectRepository : ISubjectRepository
+    public class SubjectsRepository : ISubjectsRepository
     {
 
         private readonly AppDbContext _context;
 
-        public SubjectRepository(AppDbContext context)
+        public SubjectsRepository(AppDbContext context)
         {
             _context = context;
         }

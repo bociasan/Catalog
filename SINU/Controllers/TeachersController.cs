@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SINU.DTO;
 using SINU.Model;
 using SINU.Repository;
+using SINU.VM;
 
 namespace SINU.Controllers
 {
@@ -10,50 +11,50 @@ namespace SINU.Controllers
     [ApiController]
     public class TeachersController : ControllerBase
     {
-        private readonly ITeacherRepository _repository;
+        private readonly ISubjectsProfesorRepository subjectsProfesorRepository;
+        private readonly IUsersRepository usersRepository;
+        private readonly ISubjectsRepository subjectsRepository;
 
-        public TeachersController(ITeacherRepository repository)
+
+        public TeachersController(ISubjectsProfesorRepository subjectsProfesorRepository, IUsersRepository usersRepository, ISubjectsRepository subjectsRepository)
         {
-            _repository = repository;
+            this.subjectsProfesorRepository = subjectsProfesorRepository;
+            this.usersRepository = usersRepository;
+            this.subjectsRepository = subjectsRepository;
         }
 
         [HttpGet]
-        public List<Teacher> Get()
+        public List<TeacherVM> Get()
         {
-            return _repository.GetAll();
+            //var teachers = usersRepository.GetTeachers();
+            return usersRepository.GetTeachers().ConvertAll(x => new TeacherVM(x));
         }
 
         [HttpGet("{id}")]
-        public Teacher Get(int id)
+        public TeacherVM Get(int id)
         {
-            return _repository.GetTeacherById(id);
+            return new TeacherVM(usersRepository.GetUserById(id));
         }
 
         [HttpGet("{id}/materials")]
-        public List<SubjectProfesor> GetTeacherMaterials(int id)
+        public List<SubjectProfesorVM> GetTeacherMaterials(int id)
         {
-            return _repository.GetTeacherSubjectsByTeacherId(id);
+            return subjectsProfesorRepository.GetSubjectsProfesorByTeacherId(id).ConvertAll(x => new SubjectProfesorVM(x));
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, Teacher teacher)
-        {
-            teacher.Id = id;
-            var newTeacher = _repository.Update(teacher);
-            if (newTeacher != null)
-            {
-                return Ok(newTeacher);
-            }
-            else
-            {
-                return BadRequest("Can't create this teacher.");
-            }
-        }
-
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //[HttpPut("{id}")]
+        //public IActionResult Put(int id, TeacherVM teacherVM)
+        //{
+        //    var existingUser = usersRepository.GetUserById(id);    
+        //    var newTeacher = subjectsProfesorRepository.Update(teacher);
+        //    if (newTeacher != null)
+        //    {
+        //        return Ok(newTeacher);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest("Can't update this teacher.");
+        //    }
+        //}
     }
 }

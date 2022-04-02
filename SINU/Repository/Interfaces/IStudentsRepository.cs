@@ -6,7 +6,7 @@ using SINU.Controllers;
 using SINU.Model;
 
 namespace SINU.Repository { 
-    public interface IStudentRepository
+    public interface IStudentsRepository
     {
         Student GetStudentById(int id);
         List<Student> GetAll();

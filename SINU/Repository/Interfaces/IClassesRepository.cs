@@ -6,7 +6,7 @@ using SINU.Data;
 using SINU.Model;
 
 namespace SINU.Repository { 
-    public interface IClassRepository
+    public interface IClassesRepository
     {
         Class GetClassById(int id);
         List<Class> GetAll();

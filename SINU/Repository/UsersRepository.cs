@@ -10,11 +10,11 @@ using SINU.DTO;
 namespace SINU.Repository
 {
 
-    public class UserRepository : IUserRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly AppDbContext _context;
 
-      public  UserRepository(AppDbContext context) {
+      public  UsersRepository(AppDbContext context) {
 
             _context = context;
         
@@ -70,6 +70,16 @@ namespace SINU.Repository
         public User GetUserByUsername(string Username)
         {
             return _context.Users.FirstOrDefault(u => u.Username == Username);
+        }
+
+        public List<User> GetTeachers()
+        {
+            return _context.Users.Where(u => u.Role == "Teacher").ToList();
+        }
+
+        public User GetUserById(int id)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == id);
         }
     }
 }

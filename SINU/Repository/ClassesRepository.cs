@@ -7,12 +7,12 @@ using SINU.DTO;
 
 namespace SINU.Repository
 {
-    public class ClassRepository : IClassRepository
+    public class ClassesRepository : IClassesRepository
     {
 
         private readonly AppDbContext _context;
 
-        public ClassRepository(AppDbContext context)
+        public ClassesRepository(AppDbContext context)
         {
             _context = context;
         }

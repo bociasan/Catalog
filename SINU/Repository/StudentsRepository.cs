@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SINU.Repository
 {
-    public class StudentRepository : IStudentRepository
+    public class StudentsRepository : IStudentsRepository
     {
         private readonly AppDbContext _context;
 
-        public StudentRepository(AppDbContext context)
+        public StudentsRepository(AppDbContext context)
         {
             _context = context;
         }
