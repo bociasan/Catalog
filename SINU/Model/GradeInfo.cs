@@ -7,7 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SINU.Model
 {
-    public class SubjectStudent
+    [Table("Grades")]
+    public class GradeInfo
     {
         [Key]
         public int Id { get; set; }

@@ -18,7 +18,7 @@ namespace SINU.Data
         public DbSet<SubjectClass> SubjectsClass { set; get; }
         public DbSet<SubjectProfesor> SubjectsProfesor { set; get; }
         public DbSet<Subject> Subjects { set; get; }
-        public DbSet<SubjectStudent> SubjectsStudent { set; get; }
+        public DbSet<GradeInfo> Grades { set; get; }
         public DbSet<User> Users { set; get; }
 
 
@@ -39,7 +39,7 @@ namespace SINU.Data
             modelBuilder.Entity<StudyYear>();
             modelBuilder.Entity<SubjectClass>();
             modelBuilder.Entity<SubjectProfesor>();
-            modelBuilder.Entity<SubjectStudent>();
+            modelBuilder.Entity<GradeInfo>();
             modelBuilder.Entity<Subject>();
 
         }

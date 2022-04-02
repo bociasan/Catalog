@@ -7,10 +7,18 @@ function Modal() {
 
     const url = "https://localhost:44328/api/login";
 
+
     const [data, setData] = useState({
+
         Email: "",
-        Password: ""
-    })
+        Password: "",
+
+
+    }
+    )
+
+
+
 
     function handle(e) {
 
@@ -19,6 +27,7 @@ function Modal() {
         setData(newdata)
         console.log(newdata)
     }
+
 
     function submit(e) {
 

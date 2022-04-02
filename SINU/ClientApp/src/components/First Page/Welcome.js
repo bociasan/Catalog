@@ -13,9 +13,6 @@ function Welcome(props) {
 
 
     return (
-
-     
-
         <div className="welcomeContainer">
             <div className="teacherContainer">
             <Teacher />

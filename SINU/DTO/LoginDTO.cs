@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SINU.DTO.LoginDTO
+﻿namespace SINU.DTO
 {
     public class LoginDTO
     {

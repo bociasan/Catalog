@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using SINU.Data;
 using SINU.Repository;
 using SINU.Model;
+using SINU.DTO;
 
 namespace SINU.Repository
 {
@@ -19,6 +20,24 @@ namespace SINU.Repository
         
         }
 
+        public User Register(RegisterDTO registerDTO)
+        {
+
+            var existingUser = _context.Users.FirstOrDefault(u => u.IDNP == registerDTO.IDNP);
+            if (existingUser == null)
+            {
+                return null;
+            } else
+            {
+                existingUser.Email = registerDTO.Email;
+                existingUser.Password = registerDTO.Password;
+                existingUser.Username = registerDTO.Username;
+                _context.Users.Update(existingUser);
+                _context.SaveChanges();
+                return existingUser;
+            }
+        }
+
         public User Register(User user)
         {
 
@@ -26,7 +45,8 @@ namespace SINU.Repository
             if (existingUser == null)
             {
                 return null;
-            } else
+            }
+            else
             {
                 existingUser.Email = user.Email;
                 existingUser.Password = user.Password;
@@ -51,11 +71,5 @@ namespace SINU.Repository
         {
             return _context.Users.FirstOrDefault(u => u.Username == Username);
         }
-
-
-
-
-
-
     }
 }

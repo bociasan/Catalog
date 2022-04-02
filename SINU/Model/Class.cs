@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SINU.DTO;
 
 namespace SINU.Model
 {
@@ -11,14 +9,16 @@ namespace SINU.Model
     public class Class
     {
         [Key]
-        public int Id { get; set; }
-        public string Number { get; set; }
+        public int Id { get;     set; }
+        [Required]
+        public string Number { get;     set; }
+        [Required]
         public string Letter { get; set; }
-
+        [Required]
+        [ForeignKey("StudyYear")]
         public int StudyYearId { get; set; }
-        public int MentorId { get; set; }
-        public User Mentor { get; set; }
-        public List<Student> Students { get; set; }
-        public List<SubjectClass> Subjects { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+
     }
 }

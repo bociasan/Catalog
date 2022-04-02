@@ -30,6 +30,7 @@ namespace SINU
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
             services.AddScoped<IClassRepository, ClassRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
             //services.AddScoped<IStudyYearRepository, StudyYearRepository>();
@@ -115,6 +116,9 @@ namespace SINU
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+
+            
         }
     }
 }

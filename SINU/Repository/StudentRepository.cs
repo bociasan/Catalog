@@ -32,7 +32,8 @@ namespace SINU.Repository
             //var student = _context.Students.FirstOrDefault(s => s.Id == id);
             //student.User = _context.Users.FirstOrDefault(u => u.Id == student.UserId);
             //student.Class = _context.Classes.FirstOrDefault(c => c.Id == student.ClassId);
-            return _context.Students.Include(s=>s.User).Include(s => s.Class).FirstOrDefault(s => s.Id == id);
+            //return _context.Students.Include(s=>s.User).Include(s => s.Class).FirstOrDefault(s => s.Id == id);
+            return _context.Students.FirstOrDefault(s => s.Id == id);
 
         }
     }
