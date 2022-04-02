@@ -4,6 +4,7 @@ import React from "react";
 import { Routes, Route, Switch,Redirect} from 'react-router-dom'
 import Home from "./components/First Page/Home"
 import Teachers from "./components/Teachers Page/displayTableTeachers"
+import TeachersList from "./components/Teachers Page/displayTableTeachersList"
 import Welcome from "./components/First Page/Welcome"
 import { useRoutes } from 'hookrouter';
 
@@ -12,7 +13,8 @@ function App() {
 
     const routes = {
         // '/': () => <Welcome />,
-        '/': () => <Teachers />,
+        '/': () => <TeachersList />,
+        '//': () => <Teachers />,
         '/home': () => <Home />,
 
     };

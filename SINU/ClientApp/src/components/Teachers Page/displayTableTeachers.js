@@ -6,7 +6,7 @@ class DisplayTableTeachers extends React.Component {
         this.state = {
             list: [''],
             teacher: null,
-            id: 2022
+            id: null
         }
         this.id = 2022
         this.callApi = this.callApi.bind(this)
@@ -15,17 +15,17 @@ class DisplayTableTeachers extends React.Component {
 
     callApi() {
         fetch(`https://localhost:44328/api/Teachers/${this.id}`).then(
-            (respone) => respone.json()
+            (response) => response.json()
         ).then((data) => {
-            // console.log(data)
+            console.log(data)
             this.setState({
                 teacher: data
             })
             // console.log(this.state.list[0].User.FirstName)
-            console.log(this.state.teacher)
+            // console.log(this.state.teacher)
 
             fetch(`https://localhost:44328/api/Teachers/${this.state.teacher.Id}/materials`).then(
-                (respone) => respone.json()
+                (response) => response.json()
             ).then((data) => {
                 console.log(data)
                 this.setState({
@@ -34,8 +34,23 @@ class DisplayTableTeachers extends React.Component {
                 // console.log(this.state.list[0].User.FirstName)
             })
         })
-
     }
+
+    // callApi() {
+    //     fetch(`https://localhost:44328/api/Teachers/${this.id}`)
+    //         .then(function(res){
+    //             if (res.ok) {
+    //                 console.log('ok')
+    //                 return res.json()
+    //             } else {
+    //                 return res.json()
+    //                     .then(function(err) {
+    //                         console.log('400')
+    //                         throw new Error("There's an error upstream and it says " + err.message);
+    //                     })
+    //             }
+    //         })
+    // }
 
     render() {
 
@@ -50,7 +65,7 @@ class DisplayTableTeachers extends React.Component {
         })
         return (
             <div className="container">
-                {this.state.list[0] && <h2>Teacher {this.state.teacher.FirstName} {this.state.teacher.LastName} subjects: </h2>}
+                {this.state.teacher && <h2>Teacher {this.state.teacher.FirstName} {this.state.teacher.LastName} subjects: </h2>}
                 <table className="table table-striped table-hover align-middle">
                     <thead>
                     <tr>

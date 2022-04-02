@@ -31,9 +31,16 @@ namespace SINU.Controllers
         }
 
         [HttpGet("{id}")]
-        public TeacherVM Get(int id)
+        public IActionResult Get(int id)
         {
-            return new TeacherVM(usersRepository.GetUserById(id));
+            var existingUser = usersRepository.GetUserById(id);
+            if (existingUser != null)
+            {
+                return Ok(new TeacherVM(existingUser));
+            } else
+            {
+                return BadRequest("Teacher not found.");
+            }
         }
 
         [HttpGet("{id}/materials")]
