@@ -11,6 +11,11 @@ using SINU.Data;
 using SINU.Repository;
 using Microsoft.OpenApi.Models;
 
+using SINU.DTO;
+using SINU.Model;
+using SINU.Mapper;
+using AutoMapper;
+
 namespace SINU
 {
     public class Startup
@@ -40,6 +45,12 @@ namespace SINU
             services.AddScoped<IGradesRepository, GradesRepository>();
 
 
+            services.AddAutoMapper(typeof(Startup));
+
+            //var configuration = new MapperConfiguration(cfg =>
+            //{
+            //    cfg.AddProfile<OrganizationProfile>();
+            //});
 
 
 

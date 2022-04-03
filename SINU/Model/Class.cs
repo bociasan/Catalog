@@ -17,8 +17,10 @@ namespace SINU.Model
         [Required]
         [ForeignKey("StudyYear")]
         public int StudyYearId { get; set; }
+        public StudyYear StudyYear { get; set; }
         [ForeignKey("User")]
         public int MentorId { get; set; }
+        public User Mentor { get; set; }
 
     }
 }

@@ -10,10 +10,12 @@ namespace SINU.Repository
     public interface IUsersRepository
     {
         User GetUserById(int id);
+        User GetTeacherById(int id);
         User GetUserByEmail(string email);
         User GetUserByUsername(string Username);
-        User Register(RegisterDTO registerDTO);
         User Register(User user);
+        //User Register(User user);
+        User Insert(User user);
         List<User> GetAll();
         List<User> GetTeachers();
     }

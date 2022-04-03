@@ -18,15 +18,36 @@ namespace SINU.Controllers
         }
 
         [HttpGet]
-        public List<Student> Get()
+        public IActionResult GetAll()
         {
-            return studentsRepository.GetAll();
+
+            var studentsDTOList = studentsRepository.GetAll();
+            if (studentsDTOList.Count > 0)
+            {
+                return Ok(studentsDTOList);
+            }
+            else
+            {
+                //return BadRequest("There are no students.");
+                return NotFound(new { message = "Students not found." });
+            }
         }
 
         [HttpGet("{id}")]
-        public Student Get(int id)
+        public IActionResult Get(int id)
         {
-            return studentsRepository.GetStudentById(id);
+
+            var student = studentsRepository.GetStudentById(id);
+            if (student != null)
+            {
+                return Ok(new StudentDTO(student));
+            }
+            else
+            {
+                //return BadRequest("There is no student with id = " + id);
+                return NotFound(new { message = $"Student with id {id} not found." });
+
+            }
         }
 
         //[HttpPost]

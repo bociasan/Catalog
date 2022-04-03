@@ -1,6 +1,8 @@
-﻿namespace SINU.Model
+﻿using SINU.Model;
+
+namespace SINU.DTO
 {
-    public class SubjectProfesorVM
+    public class SubjectProfesorDTO
     {
         public int SubjectProfesorId { get; set; }
         public int UserId { get; set; }
@@ -12,9 +14,9 @@
 
 
 
-        public SubjectProfesorVM() { }
+        public SubjectProfesorDTO() { }
 
-        public SubjectProfesorVM(SubjectProfesor subjectProfesor)
+        public SubjectProfesorDTO(SubjectProfesor subjectProfesor)
         {
             this.SubjectProfesorId = subjectProfesor.Id;
             this.UserId = subjectProfesor.UserId;

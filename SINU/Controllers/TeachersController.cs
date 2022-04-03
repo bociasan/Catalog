@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SINU.DTO;
-using SINU.Model;
 using SINU.Repository;
-using SINU.VM;
 
 namespace SINU.Controllers
 {
@@ -24,29 +21,55 @@ namespace SINU.Controllers
         }
 
         [HttpGet]
-        public List<TeacherVM> Get()
+        public IActionResult GetAll()
         {
-            //var teachers = usersRepository.GetTeachers();
-            return usersRepository.GetTeachers().ConvertAll(x => new TeacherVM(x));
+            var teachersDTOList = usersRepository.GetTeachers().ConvertAll(x => new TeacherDTO(x));
+            if (teachersDTOList.Count > 0)
+            {
+                return Ok(teachersDTOList);
+            }
+            else
+            {
+                return NotFound(new { message = "Teachers not found." }); 
+            }
+
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var existingUser = usersRepository.GetUserById(id);
+            var existingUser = usersRepository.GetTeacherById(id);
             if (existingUser != null)
             {
-                return Ok(new TeacherVM(existingUser));
-            } else
+                return Ok(new TeacherDTO(existingUser));
+            }
+            else
             {
-                return BadRequest("Teacher not found.");
+                return NotFound(new { message = $"Teacher with id {id} not found / user is not teacher." });
             }
         }
 
         [HttpGet("{id}/materials")]
-        public List<SubjectProfesorVM> GetTeacherMaterials(int id)
+        public IActionResult GetTeacherMaterials(int id)
         {
-            return subjectsProfesorRepository.GetSubjectsProfesorByTeacherId(id).ConvertAll(x => new SubjectProfesorVM(x));
+            var teacher = usersRepository.GetTeacherById(id);
+            if (teacher == null)
+            {
+                return NotFound(new { message = $"Teacher with id {id} not found / user is not teacher." });
+            }
+            else
+            {
+                var subjectProfesorVMList = subjectsProfesorRepository.GetSubjectsProfesorByTeacherId(id).ConvertAll(x => new SubjectProfesorDTO(x));
+                if (subjectProfesorVMList.Count > 0)
+                {
+                    return Ok(subjectProfesorVMList);
+                }
+                else
+                {
+                    return NotFound(new { message = "Teacher has no subjects." });
+                }
+            }
+
         }
 
         //[HttpPut("{id}")]

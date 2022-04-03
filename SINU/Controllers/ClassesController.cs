@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using SINU.DTO;
 using SINU.Model;
 using SINU.Repository;
 
@@ -18,16 +19,34 @@ namespace SINU.Controllers
 
 
         [HttpGet]
-        public List<Class> Get()
+        public IActionResult GetAll()
         {
-            return classesRepository.GetAll();
+
+            var classesDTOList = classesRepository.GetAll();
+            if (classesDTOList.Count > 0)
+            {
+                return Ok(classesDTOList);
+            }
+            else
+            {
+                return NotFound(new { message = "Classes not found." });
+            }
         }
 
 
         [HttpGet("{id}")]
-        public Class Get(int id)
+        public IActionResult Get(int id)
         {
-            return classesRepository.GetClassById(id);
+            var existingClass = classesRepository.GetClassById(id);
+            if (existingClass != null)
+            {
+                return Ok(new ClassDTO(existingClass));
+            }
+            else
+            {
+                //return BadRequest("There is no class with id = " + id);
+                return NotFound(new { message = $"Class with id {id} not found." });
+            }
         }
     }
 }

@@ -20,24 +20,6 @@ namespace SINU.Repository
         
         }
 
-        public User Register(RegisterDTO registerDTO)
-        {
-
-            var existingUser = _context.Users.FirstOrDefault(u => u.IDNP == registerDTO.IDNP);
-            if (existingUser == null)
-            {
-                return null;
-            } else
-            {
-                existingUser.Email = registerDTO.Email;
-                existingUser.Password = registerDTO.Password;
-                existingUser.Username = registerDTO.Username;
-                _context.Users.Update(existingUser);
-                _context.SaveChanges();
-                return existingUser;
-            }
-        }
-
         public User Register(User user)
         {
 
@@ -45,8 +27,7 @@ namespace SINU.Repository
             if (existingUser == null)
             {
                 return null;
-            }
-            else
+            } else
             {
                 existingUser.Email = user.Email;
                 existingUser.Password = user.Password;
@@ -56,6 +37,27 @@ namespace SINU.Repository
                 return existingUser;
             }
         }
+
+        //public User Register(User user)
+        //{
+
+        //    var existingUser = _context.Users.FirstOrDefault(u => u.IDNP == user.IDNP);
+        //    if (existingUser == null)
+        //    {
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        existingUser.Email = user.Email;
+        //        existingUser.Password = user.Password;
+        //        existingUser.Username = user.Username;
+        //        _context.Users.Update(existingUser);
+        //        _context.SaveChanges();
+        //        return existingUser;
+        //    }
+        //}
+
+
 
         public List<User> GetAll()
         {
@@ -80,6 +82,18 @@ namespace SINU.Repository
         public User GetUserById(int id)
         {
             return _context.Users.FirstOrDefault(u => u.Id == id);
+        }
+
+        public User GetTeacherById(int id)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == id  && u.Role=="Teacher");
+        }
+
+        public User Insert(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            return user;
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using SINU.Model;
 
-namespace SINU.VM
+namespace SINU.DTO
 {
-    public class SubjectClassVM
+    public class SubjectClassDTO
     {
         public int Id { get; set; }
         public int ClassId { get; set; }
@@ -14,12 +14,12 @@ namespace SINU.VM
         public string TeacherLastName { get; set; }
 
 
-        public SubjectClassVM()
+        public SubjectClassDTO()
         {
 
         }
 
-        public SubjectClassVM(SubjectClass subjectClass)
+        public SubjectClassDTO(SubjectClass subjectClass)
         {
             Id = subjectClass.Id;
             ClassId = subjectClass.ClassId;
