@@ -26,10 +26,10 @@
     animation-name: navbar;
     animation-duration: 3s;
 }
-@keyframes navbar {
+/*@keyframes navbar {
     from{opacity: 0; transform: translate(0,200px);}
     to{opacity: 1;}
-}
+}*/
 .navbar-button-teacher{
     width: 105px;
     font-weight: 600;
@@ -58,10 +58,10 @@
     animation-name: studentCard;
     animation-duration: 1.8s ;
 }
-@keyframes studentCard {
+/*@keyframes studentCard {
     from {opacity: 0px;transform: translate(-1300px,0px);}
     to {opacity: 1;}
-  }
+  }*/
 
 .student-card-text{
     display: flex;
@@ -94,10 +94,10 @@
   animation-name: loginAnimation;
   animation-duration: 2s;
 }
-@keyframes loginAnimation {
+/*@keyframes loginAnimation {
     from{opacity: 0;transform: translate(0,200px);}
     to{opacity: 1;}
-}
+}*/
 .student-card-button-login:hover{
     color: rgb(24,29,82);
     background-color: rgb(255,255,255);
@@ -117,10 +117,10 @@
     animation-name: signUpAnimation;
     animation-duration: 2.3s;
 }
-@keyframes signUpAnimation {
+/*@keyframes signUpAnimation {
     from{opacity: 0;transform: translate(0,200px);}
     to{opacity: 1;}
-}
+}*/
 .student-card-button-signup:hover{
     color: rgb(255,255,255);
     background-color: rgb(24,29,82);
@@ -139,10 +139,10 @@
     animation-name: teacherCard;
     animation-duration: 1.8s ;
 }
-@keyframes teacherCard {
+/*@keyframes teacherCard {
     from {opacity: 0px;transform: translate(1300px,0px);}
     to {opacity: 1;}
-  }
+  }*/
   
 .teacher-card-button-signup{
     width: 125px;
@@ -159,10 +159,10 @@
     animation-name: signUpAnimation;
     animation-duration: 2.3s;
 }
-@keyframes signUpAnimation {
+/*@keyframes signUpAnimation {
     from{opacity: 0;transform: translate(0,200px);}
     to{opacity: 1;}
-}
+}*/
 .teacher-card-button-signup:hover{
     background-color: rgb(35,173,209);
     color:white;
@@ -187,7 +187,7 @@
     background-color: white;
     color: rgb(35,173,209);
 }
-@keyframes signUpAnimation {
+/*@keyframes signUpAnimation {
     from{opacity: 0;transform: translate(0,200px);}
     to{opacity: 1;}
-}
+}*/
