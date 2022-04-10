@@ -1,135 +1,184 @@
-import React from "react";
-
-import { useEffect, useState } from 'react';
-import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState } from "react";
 import Axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-
-
-
-
-
-function ModalRegister() {
-
-
-    const [data, setData] = useState  ( {
-
-                Username : "",
-                Email : "",
-                Password : "",
-                Confirm : "",
-                IDNP : ""
-
-        }
-    )
-
-    
-    const url = "https://localhost:44328/api/register";
-
-
-
+function ModalRegister(props) {
+  const url = "https://localhost:44328/api/register";
  
-//   const navigate = useNavigate();
-  //  navigate('/Home');
+ 
+  const initialValues = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+    IDNP: "",
+  };
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    console.log(formValues);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+     setIsSubmit(true);
+      Axios.post(url, {
+          Email: formValues.email,
+          Password: formValues.password,
+          IDNP: formValues.IDNP,
+      })
+       .then((res) => {
+          console.log(res.formValues);
+       })
+          .catch((err) => {
 
-    function handle(e) {
+              const validate = (values) => {
+                  const errors = {};
+                  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+                  if (!values.IDNP) {
+                      errors.IDNP = "IDNP is required";
+                  } else if (values.IDNP.length !== 13) {
+                      errors.IDNP= "Wrong format"
+                  }
+                  if (!values.email) {
+                      errors.email = "Email is required!";
+                  } else if (!regex.test(values.email)) {
+                      errors.email = "This is not a valid email format!";
+                  }
+                  if (!values.password) {
+                      errors.password = "Password is required";
+                  }
+                  return errors;
+              };
+              setFormErrors(validate(formValues));
+          });
+  };
 
-        const newdata = {...data }
-        newdata[e.target.id] = e.target.value;
-        setData(newdata)
-        console.log(newdata)
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
     }
+  }, [formErrors]);
 
+  //const validate = (values) => {
+  //  const errors = {};
+  //  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  //  if (!values.email) {
+  //    errors.email = "Email is required!";
+  //  } else if (!regex.test(values.email)) {
+  //    errors.email = "This is not a valid email format!";
+  //  }
+  //  if (!values.password) {
+  //    errors.password = "Password is required";
+  //  } else if (values.password.length < 4) {
+  //    errors.password = "Password must be more than 4 characters";
+  //  }
+  //  if (values.password != values.confirmPassword) {
+  //    errors.confirmPassword = "Password isnt the same";
+  //  }
 
-    function submit(e) {
+  //  if (!values.IDNP) {
+  //    errors.IDNP = "IDNP is required";
+  //  } else if (values.IDNP.length < 10) {
+  //    errors.IDNP = "you are missing some characters";
+  //  } else if (values.IDNP.length === 10) {
+  //    errors.IDNP = "you are missing a character";
+  //  }
 
-        e.preventDefault();
-        Axios.post(url, {
-            Username: data.Username,
-            Email: data.Email,
-            Password: data.Password,
-            IDNP: data.IDNP
+  //  return errors;
+  //};
 
+  const usePasswordToggle = () => {
+    const [visible, setVisiblity] = useState(false);
 
-        }).then(res => { console.log(res.data)})
-
-
-
-    }
+    const Icon = (
+      <FontAwesomeIcon
+        icon={visible ? faEye : faEyeSlash}
+        onClick={() => setVisiblity((visiblity) => !visiblity)}
+        style={{ fontSize: "24px", color: "gray" }}
+      />
+    );
+    const InputType = visible ? "text" : "password";
+    return [InputType, Icon];
+  };
+  const [PasswordInputType, ToogleIcon] = usePasswordToggle();
+  const [PasswordInputType1, ToogleIcon1] = usePasswordToggle();
 
   return (
-      <div id="registerModal" className="modal">
-          <form onSubmit={(e) => submit(e)}>
-        <h3>Register</h3>
-
-              <input
-                  name="Username"
-                  required
-                  id="Username"
-                  type="text"
-                  className="password-modal"
-                  placeholder="Enter username"
-                  value={data.Username}
-                  onChange={(e) => handle(e) }
-        
-        />
-
-              <input type="Email"
-                  placeholder="Enter email"
-                  required
-                  id="Email"
-                  type="text"
-                  className="password-modal"
-                  placeholder="Enter Email"
-                  value={data.Email}
-                  onChange={(e) => handle(e)}
-                       />
-
-              <input
-          name="Password"
-          required
-          id="Password"
-          type="password"
-          className="password-modal"
-           placeholder="Enter password"
-                  value={data.Password}
-                  onChange={(e) => handle(e)}
-                  
-        />
-
-              <input
-          name="Confirm"
-          required
-          id="Confirm"
-          type="password"
-          className="password-modal"
-                  placeholder="Confirm password"
-                  value={data.Confirm}
-                  onChange={(e) => handle(e)}
-              
-        />
-
-        <div className="form-group">
-          <label>Identification Code</label>
-                  <input
-            name="IDNP"
-            required
-            id="IDNP"
-            type="text"
-            className="password-modal"
-            placeholder="Enter ID"
-                      value={data.IDNP}
-                      onChange={(e) => handle(e)}
-           
-          />
+    <div className="modal">
+      <form onSubmit={handleSubmit}>
+        <div className="modal-register-title">
+            Register
         </div>
         
-
-              <button type="submit" className="button-login">
-            Sign up
-          </button>       
+        <div className="inputField">
+          <h1>Identification code</h1>
+          <input
+            name="IDNP"
+            type="text"
+            className="inputRegister"
+            placeholder="Enter ID"
+            value={formValues.IDNP}
+            onChange={handleChange}
+          />
+          <h2>{formErrors.IDNP}</h2>
+        </div>
+        <div className="inputField">
+          <h1>Email</h1>
+          <input
+            name="email"
+            placeholder="Enter email"
+            type="text"
+            className="inputRegister"
+            value={formValues.email}
+            onChange={handleChange}
+          />
+          <h2>{formErrors.email}</h2>
+        </div>
+        <div className="inputField">
+          <h1>Password</h1>
+          <input
+            name="password"
+            type={PasswordInputType}
+            className="inputRegister"
+            placeholder="Enter password"
+            value={formValues.password}
+            onChange={handleChange}
+          />
+          <h2>{formErrors.password}</h2>
+          <div className="toggleIcon">{ToogleIcon}</div>
+        </div>
+        <div className="inputField">
+          <h1>Confirm Password</h1>
+          <input
+            name="confirmPassword"
+            type={PasswordInputType1}
+            className="inputRegister"
+            placeholder="Confirm password"
+            value={formValues.confirmPassword}
+            onChange={handleChange}
+          />
+          <h2>{formErrors.confirmPassword}</h2>
+          <div className="toggleIcon">{ToogleIcon1}</div>
+        </div>
+        <button className="button-sign-up">Sign up</button>
+        <h4>
+          Already a member?
+          <button
+            className="sign-up-from-login-modal"
+            onClick={() => {
+              props.closeSignUp(false);
+              props.openLogin(true);
+            }}
+          >
+            Log In
+          </button>
+        </h4>
       </form>
     </div>
   );
