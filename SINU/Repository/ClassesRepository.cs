@@ -25,7 +25,7 @@ namespace SINU.Repository
 
         public List<Class> GetAll()
         {
-            return _context.Classes.ToList();
+            return _context.Classes.Include(s => s.Mentor).Include(s => s.StudyYear).ToList();
         }
 
         public Class GetClassById(int id)

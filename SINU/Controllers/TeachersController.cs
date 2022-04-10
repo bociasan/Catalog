@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SINU.DTO;
 using SINU.Repository;
+using AutoMapper;
 
 namespace SINU.Controllers
 {
@@ -11,6 +12,7 @@ namespace SINU.Controllers
         private readonly ISubjectsProfesorRepository subjectsProfesorRepository;
         private readonly IUsersRepository usersRepository;
         private readonly ISubjectsRepository subjectsRepository;
+        private readonly IMapper mapper;
 
 
         public TeachersController(ISubjectsProfesorRepository subjectsProfesorRepository, IUsersRepository usersRepository, ISubjectsRepository subjectsRepository)
@@ -18,6 +20,7 @@ namespace SINU.Controllers
             this.subjectsProfesorRepository = subjectsProfesorRepository;
             this.usersRepository = usersRepository;
             this.subjectsRepository = subjectsRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]

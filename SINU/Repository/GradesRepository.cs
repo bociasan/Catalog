@@ -18,17 +18,41 @@ namespace SINU.Repository
         {
             _context.Grades.Add(gradeInfo);
             _context.SaveChanges();
-            return _context.Grades.FirstOrDefault(s => s.Id == gradeInfo.Id);
+            return _context.Grades
+                //.Include(s => s.Subject)
+                .FirstOrDefault(s => s.Id == gradeInfo.Id);
         }
 
         public GradeInfo GetGradeById(int id)
         {
-            return _context.Grades.FirstOrDefault(s => s.Id == id);
+            return _context.Grades
+                //.Include(s => s.Subject)
+                .FirstOrDefault(s => s.Id == id);
         }
 
         public List<GradeInfo> GetAll()
         {
-            return _context.Grades.ToList();
+            return _context.Grades
+                //.Include(s => s.Subject)
+                //.Include(s => s.Student).ThenInclude(s => s.User)
+                //.Include(g => g.SubjectProfesor).ThenInclude(g => g.User).Include(g => g.Subject)
+                .ToList();
+        }
+
+        public List<GradeInfo> GetGradesByProfessorId(int id)
+        {
+            return _context.Grades
+                //.Include(s => s.Subject)
+                .Where(s => s.SubjectProfesorId == id)
+                .ToList();
+        }
+
+        public List<GradeInfo> GetGradesByStudentId(int id)
+        {
+            return _context.Grades
+                //.Include(s => s.Subject)
+                .Where(s => s.StudentId == id)
+                .ToList();
         }
     }
 }

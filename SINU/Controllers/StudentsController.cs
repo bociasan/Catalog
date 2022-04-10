@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SINU.Model;
 using SINU.Repository;
 using SINU.DTO;
+using AutoMapper;
 
 namespace SINU.Controllers
 {
@@ -11,20 +12,22 @@ namespace SINU.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentsRepository studentsRepository;
+        private readonly IMapper mapper;
 
-        public StudentsController(IStudentsRepository studentsRepository)
+        public StudentsController(IStudentsRepository studentsRepository, IMapper mapper)
         {
             this.studentsRepository = studentsRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
 
-            var studentsDTOList = studentsRepository.GetAll();
-            if (studentsDTOList.Count > 0)
+            var studentsList = studentsRepository.GetAll().ConvertAll(s=> mapper.Map<StudentDTO>(s));
+            if (studentsList.Count > 0)
             {
-                return Ok(studentsDTOList);
+                return Ok(studentsList);
             }
             else
             {
@@ -40,7 +43,7 @@ namespace SINU.Controllers
             var student = studentsRepository.GetStudentById(id);
             if (student != null)
             {
-                return Ok(new StudentDTO(student));
+                return Ok(mapper.Map<StudentDTO>(student));
             }
             else
             {

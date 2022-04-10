@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using AutoMapper;
 
 namespace SINU.Controllers
 {
@@ -17,28 +17,24 @@ namespace SINU.Controllers
     {
 
         private readonly IUsersRepository usersRepository;
+        private readonly IMapper mapper;
 
-        public AuthController(IUsersRepository usersRepository)
+        public AuthController(IUsersRepository usersRepository, IMapper mapper)
         {
             this.usersRepository = usersRepository;
+            this.mapper = mapper;
         }
 
         [HttpPost("register")]
         public IActionResult Register(RegisterDTO dto)
         {
-            var user = new User
-            {
 
-                IDNP = dto.IDNP,
-                Username = dto.Username,
-                Password = dto.Password,
-                Email = dto.Email
-            };
-
-            if (usersRepository.Register(user) !=null)
+            var registeredUser = usersRepository.Register(mapper.Map<User>(dto));
+            if (registeredUser != null)
             {
-                return Ok("success");
-            } else
+                return Ok(mapper.Map<UserInfoDTO>(registeredUser));
+            }
+            else
             {
                 return BadRequest("something went wrong on registering. (User not found)");
             }

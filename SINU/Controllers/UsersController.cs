@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SINU.DTO;
 using SINU.Model;
 using SINU.Repository;
+using AutoMapper;
 
 namespace SINU.Controllers
 {
@@ -30,7 +31,22 @@ namespace SINU.Controllers
             }
             else
             {
-                return NotFound(new { message = "Students not found." });
+                return NotFound(new { message = "Users not found." });
+            }
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var existingUser = usersRepository.GetUserById(id);
+            if (existingUser != null)
+            {
+                return Ok(mapper.Map<UserInfoDTO>(existingUser));
+            }
+            else
+            {
+                //return BadRequest("There is no class with id = " + id);
+                return NotFound(new { message = $"User with id {id} not found." });
             }
         }
 
@@ -48,6 +64,21 @@ namespace SINU.Controllers
             else
             {
                 return BadRequest(new { message = "Can't create user." });
+            }
+        }
+
+        [HttpGet("Detailed")]
+        public IActionResult GetAllDetailed()
+        {
+            var usersList = usersRepository.GetAll();
+            if (usersList.Count > 0)
+            {
+                //return Ok(usersList.ConvertAll(x => new UserInfoDTO(x)));
+                return Ok(usersList);
+            }
+            else
+            {
+                return NotFound(new { message = "Users not found." });
             }
         }
 

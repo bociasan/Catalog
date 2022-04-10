@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SINU.DTO;
 using SINU.Model;
 using SINU.Repository;
+using AutoMapper;
 
 namespace SINU.Controllers
 {
@@ -11,10 +12,12 @@ namespace SINU.Controllers
     public class ClassesController : ControllerBase
     {
         private readonly IClassesRepository classesRepository;
+        private readonly IMapper mapper;
 
-        public ClassesController(IClassesRepository classesRepository)
+        public ClassesController(IClassesRepository classesRepository, IMapper mapper)
         {
             this.classesRepository = classesRepository;
+            this.mapper = mapper;
         }
 
 
@@ -22,10 +25,10 @@ namespace SINU.Controllers
         public IActionResult GetAll()
         {
 
-            var classesDTOList = classesRepository.GetAll();
-            if (classesDTOList.Count > 0)
+            var classesList = classesRepository.GetAll().ConvertAll(s=>mapper.Map<ClassDTO>(s));
+            if (classesList.Count > 0)
             {
-                return Ok(classesDTOList);
+                return Ok(classesList);
             }
             else
             {
@@ -40,7 +43,7 @@ namespace SINU.Controllers
             var existingClass = classesRepository.GetClassById(id);
             if (existingClass != null)
             {
-                return Ok(new ClassDTO(existingClass));
+                return Ok(mapper.Map<ClassDTO>(existingClass));
             }
             else
             {

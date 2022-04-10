@@ -22,5 +22,13 @@ namespace SINU.Model
         public int MentorId { get; set; }
         public User Mentor { get; set; }
 
+
+        public string GetFullName()
+        {
+            return this.Number + " " + this.Letter;
+        }
+
     }
+
+    
 }

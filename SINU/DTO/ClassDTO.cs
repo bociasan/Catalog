@@ -13,25 +13,6 @@ namespace SINU.DTO {
         public string MentorFirstName { get; set; }
         public string MentorLastName { get; set; }
 
-
-        public ClassDTO()
-        {
-
-        }
-
-        public ClassDTO(Class classs)
-        {
-            this.Id = classs.Id;
-            this.Number = classs.Number;
-            this.Letter = classs.Letter;
-            this.StudyYearId = classs.StudyYearId;
-            this.StudyYearName = classs.StudyYear.Year;
-            this.MentorId = classs.MentorId;
-            this.MentorFirstName = classs.Mentor.FirstName;
-            this.MentorLastName = classs.Mentor.LastName;
-
-        }
-
     }
 
 }

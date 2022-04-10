@@ -8,6 +8,8 @@ namespace SINU.Repository
         public GradeInfo GetGradeById(int id);
         public List<GradeInfo> GetAll();
         public GradeInfo Create(GradeInfo gradeInfo);
+        public List<GradeInfo> GetGradesByProfessorId(int id);
+        public List<GradeInfo> GetGradesByStudentId(int id);
     }
 }
 

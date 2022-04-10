@@ -13,20 +13,20 @@ namespace SINU.DTO
         public int StudyYearId { get; set; }
         public string StudyYearName { get; set; }
 
-        public StudentDTO()
-        {
+        //public StudentDTO()
+        //{
 
-        }
+        //}
 
-        public StudentDTO(Student student)
-        {
-            Id = student.Id;
-            ClassId = student.ClassId;
-            UserId = student.UserId;
-            StudyYearId = student.StudyYearId;
-            FirstName = student.User.FirstName;
-            LastName = student.User.LastName;
-        }
+        //public StudentDTO(Student student)
+        //{
+        //    Id = student.Id;
+        //    ClassId = student.ClassId;
+        //    UserId = student.UserId;
+        //    StudyYearId = student.StudyYearId;
+        //    FirstName = student.User.FirstName;
+        //    LastName = student.User.LastName;
+        //}
 
     }
 }
