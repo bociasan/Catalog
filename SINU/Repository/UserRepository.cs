@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,10 +14,11 @@ namespace SINU.Repository
     {
         private readonly AppDbContext _context;
 
-      public  UserRepository(AppDbContext context) {
+        public UserRepository(AppDbContext context)
+        {
 
             _context = context;
-        
+
         }
 
         public User Register(User user)
@@ -26,7 +28,8 @@ namespace SINU.Repository
             if (existingUser == null)
             {
                 return null;
-            } else
+            }
+            else
             {
                 existingUser.Email = user.Email;
                 existingUser.Password = user.Password;

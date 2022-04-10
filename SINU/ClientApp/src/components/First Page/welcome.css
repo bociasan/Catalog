@@ -1,0 +1,193 @@
+.welcomecontainer {
+    height: 713px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../First Page/Background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.navbar-button-student{
+  width: 105px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px; 
+  border:0;
+  margin-right: 7px;
+  border-radius: 50px;
+  cursor: pointer;
+  transform: translate(-56px,-250px);
+    z-index: 1;
+    position: absolute;
+    animation-name: navbar;
+    animation-duration: 3s;
+}
+@keyframes navbar {
+    from{opacity: 0; transform: translate(0,200px);}
+    to{opacity: 1;}
+}
+.navbar-button-teacher{
+    width: 105px;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 12px; 
+    border:0;
+    margin-left: 7px;
+    border-radius: 50px;
+    transform: translate(56px,-250px);
+    z-index: 1;
+    position: absolute;
+    animation-name: navbar;
+    animation-duration: 3s;
+    cursor: pointer;
+  }
+.student-card{
+    height: 630px;
+    width: 1000px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px black;
+    background-image: url('../First Page/studentt.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: width 0.6ms;
+    animation-name: studentCard;
+    animation-duration: 1.8s ;
+}
+@keyframes studentCard {
+    from {opacity: 0px;transform: translate(-1300px,0px);}
+    to {opacity: 1;}
+  }
+
+.student-card-text{
+    display: flex;
+    font-size: 44px;
+    font-weight: 800;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 170px;
+    margin-left: 70px;
+    text-shadow: 2px 2px black;
+}
+.student-card-buttons{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-left: 70px;
+}
+.student-card-button-login{
+  width: 125px;
+  color: white;
+  font-weight: 700;
+  background-color: transparent;
+  font-size: 20px;
+  padding: 9px; 
+  border: 1px solid white;
+  margin-right: 7px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.7s;
+  animation-name: loginAnimation;
+  animation-duration: 2s;
+}
+@keyframes loginAnimation {
+    from{opacity: 0;transform: translate(0,200px);}
+    to{opacity: 1;}
+}
+.student-card-button-login:hover{
+    color: rgb(24,29,82);
+    background-color: rgb(255,255,255);
+}
+.student-card-button-signup{
+    width: 125px;
+    color: rgb(24,29,82);
+    font-weight: 700;
+    font-size: 20px;
+    background-color: transparent;
+    padding: 9px; 
+    border: 1px solid rgb(24,29,82);
+    margin-left: 7px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.7s;
+    animation-name: signUpAnimation;
+    animation-duration: 2.3s;
+}
+@keyframes signUpAnimation {
+    from{opacity: 0;transform: translate(0,200px);}
+    to{opacity: 1;}
+}
+.student-card-button-signup:hover{
+    color: rgb(255,255,255);
+    background-color: rgb(24,29,82);
+}
+
+.teacher-card{
+    height: 630px;
+    width: 1000px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px black;
+    background-image: url('../First Page/teacher.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: width 0.6ms;
+    animation-name: teacherCard;
+    animation-duration: 1.8s ;
+}
+@keyframes teacherCard {
+    from {opacity: 0px;transform: translate(1300px,0px);}
+    to {opacity: 1;}
+  }
+  
+.teacher-card-button-signup{
+    width: 125px;
+    color: rgb(35,173,209);
+    font-weight: 700;
+    font-size: 20px;
+    border:3px solid rgb(35,173,209);
+    padding: 9px; 
+    background-color: transparent;
+    margin-left: 7px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.7s;
+    animation-name: signUpAnimation;
+    animation-duration: 2.3s;
+}
+@keyframes signUpAnimation {
+    from{opacity: 0;transform: translate(0,200px);}
+    to{opacity: 1;}
+}
+.teacher-card-button-signup:hover{
+    background-color: rgb(35,173,209);
+    color:white;
+}
+
+.teacher-card-button-login{
+    width: 125px;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    background-color: transparent;
+    padding: 9px; 
+    border:3px solid white;
+    margin-left: 7px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.7s;
+    animation-name: signUpAnimation;
+    animation-duration: 2.3s;
+}
+.teacher-card-button-login:hover{
+    background-color: white;
+    color: rgb(35,173,209);
+}
+@keyframes signUpAnimation {
+    from{opacity: 0;transform: translate(0,200px);}
+    to{opacity: 1;}
+}

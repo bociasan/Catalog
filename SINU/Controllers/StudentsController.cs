@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SINU.Model;
 using SINU.Repository;
-
+using SINU.DTO;
 
 
 
