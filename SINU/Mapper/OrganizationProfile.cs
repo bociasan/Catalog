@@ -20,6 +20,20 @@ namespace SINU.Mapper
                 .ForMember(dest => dest.MentorLastName, opt => opt.MapFrom(src => src.Mentor.LastName))
                 .ReverseMap();
 
+            //CreateMap<Class, ClassInfoDTO>()
+            //    .ForMember(dest => dest.StudyYearName, opt => opt.MapFrom(src => src.StudyYear.Year))
+            //    .ForMember(dest => dest.MentorFirstName, opt => opt.MapFrom(src => src.Mentor.FirstName))
+            //    .ForMember(dest => dest.MentorLastName, opt => opt.MapFrom(src => src.Mentor.LastName))
+            //    .ReverseMap();
+
+            CreateMap<SubjectClass, SubjectClassDTO>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Subject.Name))
+                .ForMember(dest => dest.About, opt => opt.MapFrom(src => src.Subject.About))
+                .ForMember(dest => dest.TeacherFirstName, opt => opt.MapFrom(src => src.SubjectProfesor.User.FirstName))
+                .ForMember(dest => dest.TeacherLastName, opt => opt.MapFrom(src => src.SubjectProfesor.User.LastName))
+                .ReverseMap();
+
+
             CreateMap<Student, StudentDTO>()
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))

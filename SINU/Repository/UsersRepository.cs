@@ -14,10 +14,11 @@ namespace SINU.Repository
     {
         private readonly AppDbContext _context;
 
-      public  UsersRepository(AppDbContext context) {
+        public UsersRepository(AppDbContext context)
+        {
 
             _context = context;
-        
+
         }
 
         public User Register(User user)
@@ -27,7 +28,8 @@ namespace SINU.Repository
             if (existingUser == null)
             {
                 return null;
-            } else
+            }
+            else
             {
                 existingUser.Email = user.Email;
                 existingUser.Password = user.Password;
@@ -86,7 +88,7 @@ namespace SINU.Repository
 
         public User GetTeacherById(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id  && u.Role=="Teacher");
+            return _context.Users.FirstOrDefault(u => u.Id == id && u.Role == "Teacher");
         }
 
         public User Insert(User user)
@@ -94,6 +96,11 @@ namespace SINU.Repository
             _context.Users.Add(user);
             _context.SaveChanges();
             return user;
+        }
+
+        public User GetUserByIDNP(string idnp)
+        {
+            return _context.Users.FirstOrDefault(u => u.IDNP == idnp);
         }
     }
 }

@@ -12,10 +12,12 @@ namespace SINU.Controllers
     public class ClassesController : ControllerBase
     {
         private readonly IClassesRepository classesRepository;
+        private readonly ISubjectsClassRepository subjectsClassRepository;
         private readonly IMapper mapper;
 
-        public ClassesController(IClassesRepository classesRepository, IMapper mapper)
+        public ClassesController(IClassesRepository classesRepository, ISubjectsClassRepository subjectsClassRepository, IMapper mapper)
         {
+            this.subjectsClassRepository = subjectsClassRepository;
             this.classesRepository = classesRepository;
             this.mapper = mapper;
         }
@@ -25,7 +27,7 @@ namespace SINU.Controllers
         public IActionResult GetAll()
         {
 
-            var classesList = classesRepository.GetAll().ConvertAll(s=>mapper.Map<ClassDTO>(s));
+            var classesList = classesRepository.GetAll().ConvertAll(s => mapper.Map<ClassDTO>(s));
             if (classesList.Count > 0)
             {
                 return Ok(classesList);
@@ -43,13 +45,49 @@ namespace SINU.Controllers
             var existingClass = classesRepository.GetClassById(id);
             if (existingClass != null)
             {
-                return Ok(mapper.Map<ClassDTO>(existingClass));
+                return Ok(mapper.Map<ClassInfoDTO>(existingClass));
             }
             else
             {
                 //return BadRequest("There is no class with id = " + id);
                 return NotFound(new { message = $"Class with id {id} not found." });
             }
+        }
+
+        [HttpGet("{id}/Subjects")]
+        public IActionResult GetSubjects(int id)
+        {
+
+            if (classesRepository.GetClassById(id) != null)
+            {
+                var subjects = subjectsClassRepository.GetSubjectClassByClassId(id);
+                if (subjects != null)
+                {
+                    return Ok(subjects.ConvertAll(s => mapper.Map<SubjectClassDTO>(s)));
+                    //return Ok(mapper.Map<ClassInfoDTO>(subjects));
+                }
+                else
+                {
+                    return BadRequest("There is no subjects for ClassId = " + id);
+                }
+            }
+            else
+            {
+                return NotFound(new { message = $"Class with id {id} not found." });
+            }
+
+            //var existingClass = classesRepository.GetClassById(id);
+            //if (existingClass != null)
+            //{
+            //    var subjects = subjectsClassRepository.GetSubjectClassByClassId(id);
+            //    //return Ok(mapper.Map<ClassInfoDTO>(existingClass));
+            //    return Ok(subjects);
+            //}
+            //else
+            //{
+            //    //return BadRequest("There is no class with id = " + id);
+            //    return NotFound(new { message = $"Class with id {id} not found." });
+            //}
         }
     }
 }

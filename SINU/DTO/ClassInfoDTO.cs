@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using SINU.Model;
 
-namespace SINU.DTO {
-    public class ClassDTO
+namespace SINU.DTO
+{
+    public class ClassInfoDTO
     {
         public int Id { get; set; }
         public string Number { get; set; }
@@ -12,6 +13,8 @@ namespace SINU.DTO {
         public int MentorId { get; set; }
         public string MentorFirstName { get; set; }
         public string MentorLastName { get; set; }
+        public List<Subject> Subjects { get; set; }
+
     }
 
 }

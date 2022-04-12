@@ -6,11 +6,12 @@ using SINU.Model;
 using SINU.DTO;
 
 namespace SINU.Repository
-{ 
+{
     public interface IUsersRepository
     {
         User GetUserById(int id);
         User GetTeacherById(int id);
+        User GetUserByIDNP(string idnp);
         User GetUserByEmail(string email);
         User GetUserByUsername(string Username);
         User Register(User user);

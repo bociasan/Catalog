@@ -28,16 +28,31 @@ namespace SINU.Controllers
         [HttpPost("register")]
         public IActionResult Register(RegisterDTO dto)
         {
-
-            var registeredUser = usersRepository.Register(mapper.Map<User>(dto));
-            if (registeredUser != null)
+            var user = usersRepository.GetUserByIDNP(dto.IDNP);
+            if (user != null)
             {
-                return Ok(mapper.Map<UserInfoDTO>(registeredUser));
+                if (user.IDNP == user.Email)
+                {
+                    var registeredUser = usersRepository.Register(mapper.Map<User>(dto));
+                    if (registeredUser != null)
+                    {
+                        return Ok(mapper.Map<UserInfoDTO>(registeredUser));
+                    }
+                    else
+                    {
+                        return BadRequest("something went wrong on registering. (User not found)");
+                    }
+                }
+                else
+                {
+                    return BadRequest($"User is already registered with IDNP {dto.IDNP}.");
+                }
             }
             else
             {
                 return BadRequest("something went wrong on registering. (User not found)");
             }
+
         }
 
 
