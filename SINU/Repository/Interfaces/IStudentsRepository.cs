@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using SINU.Controllers;
 using SINU.Model;
 
-namespace SINU.Repository { 
+namespace SINU.Repository
+{
     public interface IStudentsRepository
     {
         Student GetStudentById(int id);
         List<Student> GetAll();
-   
+        Student GetStudentByUserIdYearId(int userId, int yearId);
         Student Create(Student student);
     }
 }

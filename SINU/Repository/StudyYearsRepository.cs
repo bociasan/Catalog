@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SINU.Data;
 using SINU.Model;
@@ -29,6 +30,18 @@ namespace SINU.Repository
         public StudyYear GetStudyYearById(int id)
         {
             return _context.StudyYears.FirstOrDefault(s => s.Id == id);
+        }
+
+        public int GetCurrentYearId()
+        {
+            int currentMonth = DateTime.Now.Month;
+            int currentYear = DateTime.Now.Year;
+            if (currentMonth < 10)
+                currentYear--;
+            var currentYearString = currentYear.ToString() + "-";
+            currentYear++;
+            currentYearString += currentYear;
+            return _context.StudyYears.FirstOrDefault(s => s.Year == currentYearString).Id;
         }
     }
 }

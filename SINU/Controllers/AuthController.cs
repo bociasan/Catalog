@@ -47,7 +47,7 @@ namespace SINU.Controllers
             var user = usersRepository.GetUserByEmail(dto.Email);
             if (user == null) return NotFound(new { message = $"User with email {dto.Email} not found." });
             if (user.Password != dto.Password) return BadRequest(new { message = "Incorrect password." });
-            return Ok(user);
+            return Ok(mapper.Map<UserInfoDTO>(user));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SINU.Repository
 
         public List<Student> GetAll()
         {
-            return _context.Students.Include(s=>s.StudyYear).Include(s => s.User).Include(s => s.Class).ToList();
+            return _context.Students.Include(s => s.StudyYear).Include(s => s.User).Include(s => s.Class).ToList();
         }
 
         public Student GetStudentById(int id)
@@ -36,5 +36,12 @@ namespace SINU.Repository
             return _context.Students.Include(s => s.StudyYear).Include(s => s.User).Include(s => s.Class).FirstOrDefault(s => s.Id == id);
 
         }
+
+        public Student GetStudentByUserIdYearId(int userId, int yearId)
+        {
+            return _context.Students.Include(s => s.StudyYear).Include(s => s.User).Include(s => s.Class).FirstOrDefault(s => s.UserId == userId && s.StudyYearId == yearId);
+
+        }
+
     }
 }

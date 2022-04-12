@@ -14,8 +14,5 @@ namespace SINU.Model
         public int Id { get; set; }
         [Required]
         public string Year { get; set; }
-
-
-
     }
 }

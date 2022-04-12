@@ -12,11 +12,13 @@ namespace SINU.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentsRepository studentsRepository;
+        private readonly IStudyYearsRepository studyYearsRepository;
         private readonly IMapper mapper;
 
-        public StudentsController(IStudentsRepository studentsRepository, IMapper mapper)
+        public StudentsController(IStudentsRepository studentsRepository, IStudyYearsRepository studyYearsRepository, IMapper mapper)
         {
             this.studentsRepository = studentsRepository;
+            this.studyYearsRepository = studyYearsRepository;
             this.mapper = mapper;
         }
 
@@ -24,7 +26,7 @@ namespace SINU.Controllers
         public IActionResult GetAll()
         {
 
-            var studentsList = studentsRepository.GetAll().ConvertAll(s=> mapper.Map<StudentDTO>(s));
+            var studentsList = studentsRepository.GetAll().ConvertAll(s => mapper.Map<StudentDTO>(s));
             if (studentsList.Count > 0)
             {
                 return Ok(studentsList);
@@ -37,10 +39,10 @@ namespace SINU.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetStudentByUserIdAndYearId(int id)
         {
-
-            var student = studentsRepository.GetStudentById(id);
+            var currentYearId = studyYearsRepository.GetCurrentYearId();
+            var student = studentsRepository.GetStudentByUserIdYearId(id, currentYearId);
             if (student != null)
             {
                 return Ok(mapper.Map<StudentDTO>(student));
@@ -48,10 +50,27 @@ namespace SINU.Controllers
             else
             {
                 //return BadRequest("There is no student with id = " + id);
-                return NotFound(new { message = $"Student with id {id} not found." });
+                return NotFound(new { message = $"Student with UserId {id} not found or isn't registered in current Year." });
 
             }
         }
+
+        //[HttpGet("{id}")]
+        //public IActionResult Get(int id)
+        //{
+
+        //    var student = studentsRepository.GetStudentById(id);
+        //    if (student != null)
+        //    {
+        //        return Ok(mapper.Map<StudentDTO>(student));
+        //    }
+        //    else
+        //    {
+        //        //return BadRequest("There is no student with id = " + id);
+        //        return NotFound(new { message = $"Student with id {id} not found." });
+
+        //    }
+        //}
 
         //[HttpPost]
         //public IActionResult Post(StudentDTO dto)

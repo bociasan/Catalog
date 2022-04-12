@@ -8,6 +8,7 @@ namespace SINU.Repository
         StudyYear GetStudyYearById(int id);
         List<StudyYear> GetAll();
         StudyYear Create(StudyYear studyYear);
+        int GetCurrentYearId();
     }
 }
 
