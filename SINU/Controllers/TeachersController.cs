@@ -15,7 +15,7 @@ namespace SINU.Controllers
         private readonly IMapper mapper;
 
 
-        public TeachersController(ISubjectsProfesorRepository subjectsProfesorRepository, IUsersRepository usersRepository, ISubjectsRepository subjectsRepository)
+        public TeachersController(ISubjectsProfesorRepository subjectsProfesorRepository, IUsersRepository usersRepository, ISubjectsRepository subjectsRepository, IMapper mapper)
         {
             this.subjectsProfesorRepository = subjectsProfesorRepository;
             this.usersRepository = usersRepository;
@@ -33,7 +33,7 @@ namespace SINU.Controllers
             }
             else
             {
-                return NotFound(new { message = "Teachers not found." }); 
+                return NotFound(new { message = "Teachers not found." });
             }
 
         }
@@ -52,7 +52,7 @@ namespace SINU.Controllers
             }
         }
 
-        [HttpGet("{id}/materials")]
+        [HttpGet("{id}/Subjects")]
         public IActionResult GetTeacherMaterials(int id)
         {
             var teacher = usersRepository.GetTeacherById(id);

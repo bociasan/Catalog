@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SINU.DTO;
 using SINU.Model;
 using SINU.Repository;
-using AutoMapper;
 
 namespace SINU.Controllers
 {
