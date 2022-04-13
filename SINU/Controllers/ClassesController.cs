@@ -38,14 +38,39 @@ namespace SINU.Controllers
             }
         }
 
-
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var existingClass = classesRepository.GetClassById(id);
             if (existingClass != null)
             {
-                return Ok(mapper.Map<ClassInfoDTO>(existingClass));
+                return Ok(mapper.Map<ClassDTO>(existingClass));
+            }
+            else
+            {
+                //return BadRequest("There is no class with id = " + id);
+                return NotFound(new { message = $"Class with id {id} not found." });
+            }
+        }
+
+        [HttpGet("{id}/Detailed")]
+        public IActionResult GetDetailed(int id)
+        {
+            var existingClass = classesRepository.GetClassById(id);
+            if (existingClass != null)
+            {
+                var classInfo = mapper.Map<ClassInfoDTO>(existingClass);
+                var subjects = subjectsClassRepository.GetSubjectClassByClassId(id);
+                if (subjects != null)
+                {
+                    classInfo.Subjects = subjects.ConvertAll(s => mapper.Map<SubjectClassDTO>(s));
+                    return Ok(classInfo);
+                }
+                else
+                {
+                    //return BadRequest("There is no subjects for ClassId = " + id);
+                    return Ok(classInfo);
+                }
             }
             else
             {

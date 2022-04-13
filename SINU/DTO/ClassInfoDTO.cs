@@ -13,8 +13,7 @@ namespace SINU.DTO
         public int MentorId { get; set; }
         public string MentorFirstName { get; set; }
         public string MentorLastName { get; set; }
-        public List<Subject> Subjects { get; set; }
-
+        public List<SubjectClassDTO> Subjects { get; set; } = new List<SubjectClassDTO>();
     }
 
 }

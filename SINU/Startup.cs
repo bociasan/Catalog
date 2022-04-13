@@ -52,7 +52,7 @@ namespace SINU
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(options =>
               options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddControllersWithViews();
-            //services.AddSpaStaticFiles();
+            services.AddSpaStaticFiles();
 
 
             //Enable CORS
@@ -63,11 +63,11 @@ namespace SINU
             });
 
 
-            //// In production, the React files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "ClientApp/build";
-            //});
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -115,15 +115,15 @@ namespace SINU
 
 
 
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "ClientApp";
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
 
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseReactDevelopmentServer(npmScript: "start");
-            //    }
-            //});
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
 
 
 
