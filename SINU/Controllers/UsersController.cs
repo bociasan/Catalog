@@ -161,18 +161,34 @@ namespace SINU.Controllers
 
         //}
 
-        [HttpPost("{IDNP}/Status")]
-        public IActionResult GetRegisterStatus(string IDNP)
+        [HttpPost("{IDNP_or_Email}/Status")]
+        public IActionResult GetRegisterStatus(string IDNP_or_Email)
         {
-            var user = usersRepository.GetUserByIDNP(IDNP);
-            if (user != null)
+            if (IDNP_or_Email.Contains('@'))
             {
-                //return Ok($"{{Registered: true, Role: {user.Role} }");
-                return Ok(new StatusDTO { UserId = user.Id, Registered = !(user.Email == user.IDNP), Role = user.Role });
+                var user = usersRepository.GetUserByEmail(IDNP_or_Email);
+                if (user != null)
+                {
+                    //return Ok($"{{Registered: true, Role: {user.Role} }");
+                    return Ok(new StatusDTO { UserId = user.Id, Registered = !(user.Email == user.IDNP), Role = user.Role });
+                }
+                else
+                {
+                    return BadRequest($"User with Email {IDNP_or_Email} not found.");
+                }
             }
             else
             {
-                return BadRequest($"User with IDNP {IDNP} not found.");
+                var user = usersRepository.GetUserByIDNP(IDNP_or_Email);
+                if (user != null)
+                {
+                    //return Ok($"{{Registered: true, Role: {user.Role} }");
+                    return Ok(new StatusDTO { UserId = user.Id, Registered = !(user.Email == user.IDNP), Role = user.Role });
+                }
+                else
+                {
+                    return BadRequest($"User with IDNP {IDNP_or_Email} not found.");
+                }
             }
 
         }
