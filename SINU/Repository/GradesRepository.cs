@@ -27,6 +27,7 @@ namespace SINU.Repository
         {
             return _context.Grades
                 //.Include(s => s.Subject)
+                //.Include(s => s.SubjectProfesor)
                 .FirstOrDefault(s => s.Id == id);
         }
 

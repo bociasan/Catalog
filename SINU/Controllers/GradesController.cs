@@ -108,20 +108,27 @@ namespace SINU.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, decimal value)
+        public IActionResult Update(int id, GradeModifyDTO gradeModifyDTO)
         {
             var grade = gradesRepository.GetGradeById(id);
             if (grade != null)
             {
-                grade.Grade = value;
-                var updatedGrade = gradesRepository.Update(grade);
-                if (updatedGrade != null)
+                if (grade.SubjectProfesor.UserId == gradeModifyDTO.ProfesorUserId)
                 {
-                    return Ok(mapper.Map<GradeInfoDTO>(updatedGrade));
+                    grade.Grade = gradeModifyDTO.Grade;
+                    var updatedGrade = gradesRepository.Update(grade);
+                    if (updatedGrade != null)
+                    {
+                        return Ok(mapper.Map<GradeInfoDTO>(updatedGrade));
+                    }
+                    else
+                    {
+                        return BadRequest("something went wrong on updating. (Grade not updated)");
+                    }
                 }
                 else
                 {
-                    return BadRequest("something went wrong on updating. (Grade not updated)");
+                    return BadRequest("Only teacher who posted the Grade can update it.");
                 }
             }
             else
@@ -129,6 +136,29 @@ namespace SINU.Controllers
                 return BadRequest("something went wrong on updating. (Grade not found)");
             }
         }
+
+        //[HttpPut("{id}")]
+        //public IActionResult Update(int id, decimal value)
+        //{
+        //    var grade = gradesRepository.GetGradeById(id);
+        //    if (grade != null)
+        //    {
+        //        grade.Grade = value;
+        //        var updatedGrade = gradesRepository.Update(grade);
+        //        if (updatedGrade != null)
+        //        {
+        //            return Ok(mapper.Map<GradeInfoDTO>(updatedGrade));
+        //        }
+        //        else
+        //        {
+        //            return BadRequest("something went wrong on updating. (Grade not updated)");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return BadRequest("something went wrong on updating. (Grade not found)");
+        //    }
+        //}
 
         [HttpPost()]
         public IActionResult Update(GradeCreateDTO gradeCreateDTO)
