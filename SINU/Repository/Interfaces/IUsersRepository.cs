@@ -15,8 +15,9 @@ namespace SINU.Repository
         User GetUserByEmail(string email);
         User GetUserByUsername(string Username);
         User Register(User user);
-        //User Register(User user);
         User Insert(User user);
+        User UpdateSettings(User user);
+        User UpdatePassword(User user);
         List<User> GetAll();
         List<User> GetTeachers();
     }

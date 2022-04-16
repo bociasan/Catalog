@@ -66,6 +66,58 @@ namespace SINU.Controllers
             }
         }
 
+
+        [HttpPut("{id}/Settings")]
+        public IActionResult UpdateSettings(int id, SettingsDTO dto)
+        {
+            var user = usersRepository.GetUserById(id);
+            if (user != null)
+            {
+                user.Address = dto.Address;
+                user.Email = dto.Email;
+                user.Phone = dto.Phone;
+                var updatedUser = usersRepository.UpdateSettings(user); ;
+                if (updatedUser != null)
+                {
+                    return Ok(mapper.Map<UserInfoDTO>(updatedUser));
+                }
+                else
+                {
+                    return BadRequest("something went wrong on updating. (User not updated)");
+                }
+            }
+            else
+            {
+                return BadRequest("something went wrong on updating. (User not found)");
+            }
+
+        }
+
+        [HttpPut("{id}/Password")]
+        public IActionResult UpdatePassword(int id, string password)
+        {
+            var user = usersRepository.GetUserById(id);
+            if (user != null)
+            {
+                user.Password = password;
+                var updatedUser = usersRepository.UpdatePassword(user); ;
+                if (updatedUser != null)
+                {
+                    return Ok(mapper.Map<UserInfoDTO>(updatedUser));
+                }
+                else
+                {
+                    return BadRequest("something went wrong on updating. (User not updated)");
+                }
+            }
+            else
+            {
+                return BadRequest("something went wrong on updating. (User not found)");
+            }
+
+        }
+
+
         [HttpGet("Detailed")]
         public IActionResult GetAllDetailed()
         {

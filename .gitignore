@@ -29,6 +29,7 @@ Obj/
 /wwwroot/dist/
 
 .idea/*
+/SINU/ClientApp/*
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

@@ -14,6 +14,12 @@ namespace SINU.Mapper
 
             CreateMap<User, RegisterDTO>().ReverseMap();
 
+            //CreateMap<SettingsDTO, User>()
+            //    .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            //    .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+            //    .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone))
+            //    .ReverseMap();
+
             CreateMap<Class, ClassDTO>()
                 .ForMember(dest => dest.StudyYearName, opt => opt.MapFrom(src => src.StudyYear.Year))
                 .ForMember(dest => dest.MentorFirstName, opt => opt.MapFrom(src => src.Mentor.FirstName))
