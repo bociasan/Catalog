@@ -27,7 +27,7 @@ namespace SINU.Repository
         {
             return _context.Grades
                 //.Include(s => s.Subject)
-                //.Include(s => s.SubjectProfesor)
+                .Include(s => s.SubjectProfesor)
                 .FirstOrDefault(s => s.Id == id);
         }
 
@@ -61,6 +61,12 @@ namespace SINU.Repository
             _context.Grades.Update(gradeInfo);
             _context.SaveChanges();
             return GetGradeById(gradeInfo.Id);
+        }
+        public string Delete(GradeInfo gradeInfo)
+        {
+            _context.Grades.Update(gradeInfo);
+            _context.SaveChanges();
+            return "User deleted.";
         }
     }
 }

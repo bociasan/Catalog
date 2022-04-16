@@ -173,5 +173,27 @@ namespace SINU.Controllers
                 return BadRequest("something went wrong on adding. (Grade not added)");
             }
         }
+
+        [HttpDelete()]
+        public IActionResult Delete(GradeDeleteDTO gradeDeleteDTO)
+        {
+            var grade = gradesRepository.GetGradeById(gradeDeleteDTO.GradeId);
+            if (grade != null)
+            {
+                if (grade.SubjectProfesor.UserId == gradeDeleteDTO.ProfesorUserId)
+                {
+                    gradesRepository.Delete(grade);
+                    return Ok("Grade deleted successfuly.");
+                }
+                else
+                {
+                    return BadRequest("Only teacher who posted the Grade can delete it.");
+                }
+            }
+            else
+            {
+                return BadRequest("something went wrong on deleting. (Grade not found)");
+            }
+        }
     }
 }
