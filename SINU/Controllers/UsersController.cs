@@ -31,7 +31,7 @@ namespace SINU.Controllers
             }
             else
             {
-                return NotFound(new { message = "Users not found." });
+                return NotFound("Users not found.");
             }
         }
 
@@ -46,7 +46,7 @@ namespace SINU.Controllers
             else
             {
                 //return BadRequest("There is no class with id = " + id);
-                return NotFound(new { message = $"User with id {id} not found." });
+                return NotFound($"User with id {id} not found.");
             }
         }
 
@@ -63,7 +63,22 @@ namespace SINU.Controllers
             }
             else
             {
-                return BadRequest(new { message = "Can't create user." });
+                return BadRequest("Can't create user.");
+            }
+        }
+
+        [HttpPost("UniqueEmail")]
+        public IActionResult VerifyEmail(string email)
+        {
+
+            if (usersRepository.VerifyUniqueEmail(email))
+            {
+                return Ok();
+                //return Ok(new UserInfoDTO(user));
+            }
+            else
+            {
+                return BadRequest("Email isn't unique.");
             }
         }
 
@@ -110,7 +125,7 @@ namespace SINU.Controllers
                     }
                     else
                     {
-                        return BadRequest("Something went wrong on password updating. (User not updated)");
+                        return BadRequest("error. Password doesn't change.");
                     }
                 }
                 else
@@ -120,7 +135,7 @@ namespace SINU.Controllers
             }
             else
             {
-                return BadRequest("Something went wrong on updating. (User not found)");
+                return BadRequest("User not found.");
             }
 
         }

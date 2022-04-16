@@ -95,5 +95,13 @@ namespace SINU.Repository
         {
             return _context.Users.FirstOrDefault(u => u.IDNP == idnp);
         }
+
+        public bool VerifyUniqueEmail(string email)
+        {
+            if (GetUserByEmail(email) != null)
+                return false;
+            else
+                return true;
+        }
     }
 }
