@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SINU.DTO;
@@ -120,6 +121,58 @@ namespace SINU.Controllers
             else
             {
                 return BadRequest("Something went wrong on updating. (User not found)");
+            }
+
+        }
+
+        //[HttpPost("{IDNP}/Role")]
+        //public IActionResult GetRole(string IDNP)
+        //{
+        //    var user = usersRepository.GetUserByIDNP(IDNP);
+        //    if (user != null)
+        //    {
+        //            return Ok(user.Role);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest($"User with IDNP {IDNP} not found.");
+        //    }
+
+        //}
+
+        //[HttpPost("{IDNP}/RegisterStatus")]
+        //public IActionResult GetRegisterStatus(string IDNP)
+        //{
+        //    var user = usersRepository.GetUserByIDNP(IDNP);
+        //    if (user != null)
+        //    {
+        //        if (user.Email == user.IDNP)
+        //        {
+        //            return Ok("Registered");
+        //        }else
+        //        {
+        //            return Ok("Unregistered");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return BadRequest($"User with IDNP {IDNP} not found.");
+        //    }
+
+        //}
+
+        [HttpPost("{IDNP}/Status")]
+        public IActionResult GetRegisterStatus(string IDNP)
+        {
+            var user = usersRepository.GetUserByIDNP(IDNP);
+            if (user != null)
+            {
+                //return Ok($"{{Registered: true, Role: {user.Role} }");
+                return Ok(new StatusDTO { UserId = user.Id, Registered = !(user.Email == user.IDNP), Role = user.Role });
+            }
+            else
+            {
+                return BadRequest($"User with IDNP {IDNP} not found.");
             }
 
         }

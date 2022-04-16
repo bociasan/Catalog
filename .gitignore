@@ -30,6 +30,7 @@ Obj/
 
 .idea/*
 /SINU/ClientApp/*
+/SINU/appsettings.json
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

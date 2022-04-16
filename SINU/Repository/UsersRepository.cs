@@ -33,7 +33,7 @@ namespace SINU.Repository
             {
                 existingUser.Email = user.Email;
                 existingUser.Password = user.Password;
-                existingUser.Username = user.Username;
+                //existingUser.Username = user.Username;
                 _context.Users.Update(existingUser);
                 _context.SaveChanges();
                 return existingUser;
