@@ -18,8 +18,8 @@ namespace SINU.Controllers
         private readonly IMapper mapper;
 
         public GradesController(IGradesRepository gradesRepository, IUsersRepository usersRepository,
-                                ISubjectsProfesorRepository subjectsProfesorRepository, 
-                                IStudentsRepository studentsRepository, IMapper mapper )
+                                ISubjectsProfesorRepository subjectsProfesorRepository,
+                                IStudentsRepository studentsRepository, IMapper mapper)
         {
             this.subjectsProfesorRepository = subjectsProfesorRepository;
             this.studentsRepository = studentsRepository;
@@ -104,6 +104,43 @@ namespace SINU.Controllers
             {
                 //return BadRequest("There is no class with id = " + id);
                 return NotFound(new { message = $"Grade not found for Id {id}." });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, decimal value)
+        {
+            var grade = gradesRepository.GetGradeById(id);
+            if (grade != null)
+            {
+                grade.Grade = value;
+                var updatedGrade = gradesRepository.Update(grade);
+                if (updatedGrade != null)
+                {
+                    return Ok(mapper.Map<GradeInfoDTO>(updatedGrade));
+                }
+                else
+                {
+                    return BadRequest("something went wrong on updating. (Grade not updated)");
+                }
+            }
+            else
+            {
+                return BadRequest("something went wrong on updating. (Grade not found)");
+            }
+        }
+
+        [HttpPost()]
+        public IActionResult Update(GradeCreateDTO gradeCreateDTO)
+        {
+            var addedGrade = gradesRepository.Create(mapper.Map<GradeInfo>(gradeCreateDTO));
+            if (addedGrade != null)
+            {
+                return Ok(mapper.Map<GradeInfoDTO>(addedGrade));
+            }
+            else
+            {
+                return BadRequest("something went wrong on adding. (Grade not added)");
             }
         }
     }

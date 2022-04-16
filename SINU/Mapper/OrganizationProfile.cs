@@ -57,6 +57,11 @@ namespace SINU.Mapper
                 //.ForMember(dest => dest.MentorFirstName, opt => opt.MapFrom(src => src.Mentor.FirstName))
                 //.ForMember(dest => dest.MentorLastName, opt => opt.MapFrom(src => src.Mentor.LastName))
                 .ReverseMap();
+
+            CreateMap<GradeCreateDTO, GradeInfo>()
+                //.ForMember(dest => dest.TeacherFirstName, opt => opt.MapFrom(src => src.Teacher.FirstName))
+                //.ForMember(dest => dest.TeacherLastName, opt => opt.MapFrom(src => src.Teacher.LastName))
+                .ReverseMap();
         }
     }
 }

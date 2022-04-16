@@ -3,6 +3,7 @@ using SINU.Data;
 using SINU.Model;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace SINU.Repository
 {
@@ -16,11 +17,10 @@ namespace SINU.Repository
         }
         public GradeInfo Create(GradeInfo gradeInfo)
         {
+            gradeInfo.Date = DateTime.Now;
             _context.Grades.Add(gradeInfo);
             _context.SaveChanges();
-            return _context.Grades
-                //.Include(s => s.Subject)
-                .FirstOrDefault(s => s.Id == gradeInfo.Id);
+            return gradeInfo;
         }
 
         public GradeInfo GetGradeById(int id)
@@ -53,6 +53,13 @@ namespace SINU.Repository
                 //.Include(s => s.Subject)
                 .Where(s => s.StudentId == id)
                 .ToList();
+        }
+
+        public GradeInfo Update(GradeInfo gradeInfo)
+        {
+            _context.Grades.Update(gradeInfo);
+            _context.SaveChanges();
+            return GetGradeById(gradeInfo.Id);
         }
     }
 }
