@@ -67,7 +67,7 @@ namespace SINU.Controllers
         }
 
 
-        [HttpPut("{id}/Settings")]
+        [HttpPut("{id}/UpdateProfile")]
         public IActionResult UpdateSettings(int id, SettingsDTO dto)
         {
             var user = usersRepository.GetUserById(id);
@@ -93,26 +93,33 @@ namespace SINU.Controllers
 
         }
 
-        [HttpPut("{id}/Password")]
-        public IActionResult UpdatePassword(int id, string password)
+        [HttpPut("{id}/ChangePassword")]
+        public IActionResult UpdatePassword(int id, UserPasswordDTO userPasswordDTO)
         {
             var user = usersRepository.GetUserById(id);
             if (user != null)
             {
-                user.Password = password;
-                var updatedUser = usersRepository.UpdatePassword(user); ;
-                if (updatedUser != null)
+                if (user.Password == userPasswordDTO.OldPassword)
                 {
-                    return Ok(mapper.Map<UserInfoDTO>(updatedUser));
+                    user.Password = userPasswordDTO.NewPassword;
+                    var updatedUser = usersRepository.UpdatePassword(user); ;
+                    if (updatedUser != null)
+                    {
+                        return Ok("Password changed succesfully!");
+                    }
+                    else
+                    {
+                        return BadRequest("Something went wrong on password updating. (User not updated)");
+                    }
                 }
                 else
                 {
-                    return BadRequest("something went wrong on updating. (User not updated)");
+                    return BadRequest("Incorrect old password.");
                 }
             }
             else
             {
-                return BadRequest("something went wrong on updating. (User not found)");
+                return BadRequest("Something went wrong on updating. (User not found)");
             }
 
         }
@@ -124,7 +131,6 @@ namespace SINU.Controllers
             var usersList = usersRepository.GetAll();
             if (usersList.Count > 0)
             {
-                //return Ok(usersList.ConvertAll(x => new UserInfoDTO(x)));
                 return Ok(usersList);
             }
             else

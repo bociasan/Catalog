@@ -26,7 +26,8 @@ namespace SINU.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var teachersDTOList = usersRepository.GetTeachers().ConvertAll(x => new TeacherDTO(x));
+            //var teachersDTOList = usersRepository.GetTeachers().ConvertAll(x => new TeacherDTO(x));
+            var teachersDTOList = usersRepository.GetTeachers().ConvertAll(x => mapper.Map<TeacherDTO>(x));
             if (teachersDTOList.Count > 0)
             {
                 return Ok(teachersDTOList);
@@ -44,7 +45,8 @@ namespace SINU.Controllers
             var existingUser = usersRepository.GetTeacherById(id);
             if (existingUser != null)
             {
-                return Ok(new TeacherDTO(existingUser));
+                //return Ok(new TeacherDTO(existingUser));
+                return Ok(mapper.Map<TeacherDTO>(existingUser));
             }
             else
             {
@@ -62,10 +64,12 @@ namespace SINU.Controllers
             }
             else
             {
-                var subjectProfesorVMList = subjectsProfesorRepository.GetSubjectsProfesorByTeacherId(id).ConvertAll(x => new SubjectProfesorDTO(x));
-                if (subjectProfesorVMList.Count > 0)
+                //var subjectProfesorVMList = subjectsProfesorRepository.GetSubjectsProfesorByTeacherId(id).ConvertAll(x => new SubjectProfesorDTO(x));
+                var subjectProfesorDTOList = subjectsProfesorRepository.GetSubjectsProfesorByTeacherId(id)
+                    .ConvertAll(x => mapper.Map<SubjectProfesorDTO>(x));
+                if (subjectProfesorDTOList.Count > 0)
                 {
-                    return Ok(subjectProfesorVMList);
+                    return Ok(subjectProfesorDTOList);
                 }
                 else
                 {
@@ -74,20 +78,5 @@ namespace SINU.Controllers
             }
 
         }
-
-        //[HttpPut("{id}")]
-        //public IActionResult Put(int id, TeacherVM teacherVM)
-        //{
-        //    var existingUser = usersRepository.GetUserById(id);    
-        //    var newTeacher = subjectsProfesorRepository.Update(teacher);
-        //    if (newTeacher != null)
-        //    {
-        //        return Ok(newTeacher);
-        //    }
-        //    else
-        //    {
-        //        return BadRequest("Can't update this teacher.");
-        //    }
-        //}
     }
 }

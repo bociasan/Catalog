@@ -11,23 +11,16 @@ namespace SINU.DTO
         public string Phone { get; set; }
         public string Role { get; set; }
 
-        public TeacherDTO() { }
+        //public TeacherDTO() { }
 
-        public TeacherDTO(User user)
-        {
-            this.Id = user.Id;
-            this.FirstName = user.FirstName;
-            this.LastName = user.LastName;  
-            this.Email = user.Email;    
-            this.Phone = user.Phone;
-            this.Role = user.Role;
-        }
-
-
-
-
+        //public TeacherDTO(User user)
+        //{
+        //    this.Id = user.Id;
+        //    this.FirstName = user.FirstName;
+        //    this.LastName = user.LastName;  
+        //    this.Email = user.Email;    
+        //    this.Phone = user.Phone;
+        //    this.Role = user.Role;
+        //}
     }
-
-
-
 }
