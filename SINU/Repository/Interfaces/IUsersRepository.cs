@@ -19,6 +19,7 @@ namespace SINU.Repository
         User UpdateSettings(User user);
         User UpdatePassword(User user);
         bool VerifyUniqueEmail(string email);
+        bool VerifyUniquePhone(string phone);
         List<User> GetAll();
         List<User> GetTeachers();
     }

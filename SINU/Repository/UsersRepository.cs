@@ -96,9 +96,22 @@ namespace SINU.Repository
             return _context.Users.FirstOrDefault(u => u.IDNP == idnp);
         }
 
+        public User GetUserByPhone(string phone)
+        {
+            return _context.Users.FirstOrDefault(u => u.Phone == phone);
+        }
+
         public bool VerifyUniqueEmail(string email)
         {
             if (GetUserByEmail(email) != null)
+                return false;
+            else
+                return true;
+        }
+
+        public bool VerifyUniquePhone(string phone)
+        {
+            if (GetUserByPhone(phone) != null)
                 return false;
             else
                 return true;

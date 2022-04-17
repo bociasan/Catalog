@@ -90,8 +90,31 @@ namespace SINU.Controllers
             if (user != null)
             {
                 user.Address = dto.Address;
-                user.Email = dto.Email;
-                user.Phone = dto.Phone;
+
+                if (user.Email != dto.Email)
+                {
+                    if (usersRepository.VerifyUniqueEmail(dto.Email))
+                    {
+                        user.Email = dto.Email;
+                    }
+                    else
+                    {
+                        return BadRequest("Email isn't unique.");
+                    }
+                }
+
+                if (user.Phone != dto.Phone)
+                {
+                    if (usersRepository.VerifyUniquePhone(dto.Phone))
+                    {
+                        user.Phone = dto.Phone;
+                    }
+                    else
+                    {
+                        return BadRequest("Phone number isn't unique.");
+                    }
+                }
+
                 var updatedUser = usersRepository.UpdateSettings(user); ;
                 if (updatedUser != null)
                 {
@@ -99,12 +122,12 @@ namespace SINU.Controllers
                 }
                 else
                 {
-                    return BadRequest("something went wrong on updating. (User not updated)");
+                    return BadRequest("Error. User not updated.");
                 }
             }
             else
             {
-                return BadRequest("something went wrong on updating. (User not found)");
+                return BadRequest("User not found.");
             }
 
         }
@@ -139,42 +162,6 @@ namespace SINU.Controllers
             }
 
         }
-
-        //[HttpPost("{IDNP}/Role")]
-        //public IActionResult GetRole(string IDNP)
-        //{
-        //    var user = usersRepository.GetUserByIDNP(IDNP);
-        //    if (user != null)
-        //    {
-        //            return Ok(user.Role);
-        //    }
-        //    else
-        //    {
-        //        return BadRequest($"User with IDNP {IDNP} not found.");
-        //    }
-
-        //}
-
-        //[HttpPost("{IDNP}/RegisterStatus")]
-        //public IActionResult GetRegisterStatus(string IDNP)
-        //{
-        //    var user = usersRepository.GetUserByIDNP(IDNP);
-        //    if (user != null)
-        //    {
-        //        if (user.Email == user.IDNP)
-        //        {
-        //            return Ok("Registered");
-        //        }else
-        //        {
-        //            return Ok("Unregistered");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return BadRequest($"User with IDNP {IDNP} not found.");
-        //    }
-
-        //}
 
         [HttpPost("{IDNP_or_Email}/Status")]
         public IActionResult GetRegisterStatus(string IDNP_or_Email)
