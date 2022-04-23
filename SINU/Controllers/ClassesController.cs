@@ -13,12 +13,14 @@ namespace SINU.Controllers
     {
         private readonly IClassesRepository classesRepository;
         private readonly ISubjectsClassRepository subjectsClassRepository;
+        private readonly IStudentsRepository studentsRepository;
         private readonly IMapper mapper;
 
-        public ClassesController(IClassesRepository classesRepository, ISubjectsClassRepository subjectsClassRepository, IMapper mapper)
+        public ClassesController(IClassesRepository classesRepository, ISubjectsClassRepository subjectsClassRepository, IStudentsRepository studentsRepository, IMapper mapper)
         {
             this.subjectsClassRepository = subjectsClassRepository;
             this.classesRepository = classesRepository;
+            this.studentsRepository = studentsRepository;
             this.mapper = mapper;
         }
 
@@ -34,14 +36,14 @@ namespace SINU.Controllers
             }
             else
             {
-                return NotFound(new { message = "Classes not found." });
+                return NotFound("Classes not found.");
             }
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{classId}")]
+        public IActionResult Get(int classId)
         {
-            var existingClass = classesRepository.GetClassById(id);
+            var existingClass = classesRepository.GetClassById(classId);
             if (existingClass != null)
             {
                 return Ok(mapper.Map<ClassDTO>(existingClass));
@@ -49,18 +51,18 @@ namespace SINU.Controllers
             else
             {
                 //return BadRequest("There is no class with id = " + id);
-                return NotFound(new { message = $"Class with id {id} not found." });
+                return NotFound($"Class with id {classId} not found." );
             }
         }
 
-        [HttpGet("{id}/Detailed")]
-        public IActionResult GetDetailed(int id)
+        [HttpGet("{classId}/Detailed")]
+        public IActionResult GetDetailed(int classId)
         {
-            var existingClass = classesRepository.GetClassById(id);
+            var existingClass = classesRepository.GetClassById(classId);
             if (existingClass != null)
             {
                 var classInfo = mapper.Map<ClassInfoDTO>(existingClass);
-                var subjects = subjectsClassRepository.GetSubjectClassByClassId(id);
+                var subjects = subjectsClassRepository.GetSubjectClassByClassId(classId);
                 if (subjects != null)
                 {
                     classInfo.Subjects = subjects.ConvertAll(s => mapper.Map<SubjectClassDTO>(s));
@@ -75,17 +77,17 @@ namespace SINU.Controllers
             else
             {
                 //return BadRequest("There is no class with id = " + id);
-                return NotFound(new { message = $"Class with id {id} not found." });
+                return NotFound($"Class with id {classId} not found.");
             }
         }
 
-        [HttpGet("{id}/Subjects")]
-        public IActionResult GetSubjects(int id)
+        [HttpGet("{classId}/Subjects")]
+        public IActionResult GetSubjects(int classId)
         {
 
-            if (classesRepository.GetClassById(id) != null)
+            if (classesRepository.GetClassById(classId) != null)
             {
-                var subjects = subjectsClassRepository.GetSubjectClassByClassId(id);
+                var subjects = subjectsClassRepository.GetSubjectClassByClassId(classId);
                 if (subjects != null)
                 {
                     return Ok(subjects.ConvertAll(s => mapper.Map<SubjectClassDTO>(s)));
@@ -93,12 +95,12 @@ namespace SINU.Controllers
                 }
                 else
                 {
-                    return BadRequest("There is no subjects for ClassId = " + id);
+                    return BadRequest("There is no subjects for ClassId = " + classId);
                 }
             }
             else
             {
-                return NotFound(new { message = $"Class with id {id} not found." });
+                return NotFound(new { message = $"Class with id {classId} not found." });
             }
 
             //var existingClass = classesRepository.GetClassById(id);
@@ -113,6 +115,27 @@ namespace SINU.Controllers
             //    //return BadRequest("There is no class with id = " + id);
             //    return NotFound(new { message = $"Class with id {id} not found." });
             //}
+        }
+
+        [HttpGet("{classId}/Students")]
+        public IActionResult GetStudentsByClassId(int classId)
+        {
+            if (classesRepository.GetClassById(classId) != null)
+            {
+                var students = studentsRepository.GetStudentsByClassId(classId);
+                if (students.Count > 0)
+                {
+                    return Ok(students.ConvertAll(s => mapper.Map<StudentDTO>(s)));
+                }
+                else
+                {
+                    //return BadRequest("There is no class with id = " + id);
+                    return NotFound("No students in this class.");
+                }
+            } else
+            {
+                return NotFound($"Class with id {classId} not found.");
+            }
         }
     }
 }
