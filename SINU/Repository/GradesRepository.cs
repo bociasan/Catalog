@@ -72,7 +72,7 @@ namespace SINU.Repository
         }
         public string Delete(GradeInfo gradeInfo)
         {
-            _context.Grades.Update(gradeInfo);
+            _context.Grades.Remove(gradeInfo);
             _context.SaveChanges();
             return "User deleted.";
         }
