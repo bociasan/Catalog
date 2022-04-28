@@ -56,6 +56,14 @@ namespace SINU.Repository
                 .ToList();
         }
 
+        public List<GradeInfo> GetGradesPerSubjectByStudentId(int studentId, int subjectId)
+        {
+            return _context.Grades
+                //.Include(s => s.Subject)
+                .Where(s => (s.StudentId == studentId && s.SubjectId == subjectId))
+                .ToList();
+        }
+
         public GradeInfo Update(GradeInfo gradeInfo)
         {
             _context.Grades.Update(gradeInfo);
@@ -68,5 +76,7 @@ namespace SINU.Repository
             _context.SaveChanges();
             return "User deleted.";
         }
+
+
     }
 }

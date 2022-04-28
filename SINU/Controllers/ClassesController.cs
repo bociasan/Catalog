@@ -14,13 +14,16 @@ namespace SINU.Controllers
         private readonly IClassesRepository classesRepository;
         private readonly ISubjectsClassRepository subjectsClassRepository;
         private readonly IStudentsRepository studentsRepository;
+        private readonly IGradesRepository gradesRepository;
         private readonly IMapper mapper;
 
-        public ClassesController(IClassesRepository classesRepository, ISubjectsClassRepository subjectsClassRepository, IStudentsRepository studentsRepository, IMapper mapper)
+        public ClassesController(IClassesRepository classesRepository, ISubjectsClassRepository subjectsClassRepository,
+            IStudentsRepository studentsRepository, IGradesRepository gradesRepository, IMapper mapper)
         {
             this.subjectsClassRepository = subjectsClassRepository;
             this.classesRepository = classesRepository;
             this.studentsRepository = studentsRepository;
+            this.gradesRepository = gradesRepository;
             this.mapper = mapper;
         }
 
@@ -51,7 +54,7 @@ namespace SINU.Controllers
             else
             {
                 //return BadRequest("There is no class with id = " + id);
-                return NotFound($"Class with id {classId} not found." );
+                return NotFound($"Class with id {classId} not found.");
             }
         }
 
@@ -132,7 +135,94 @@ namespace SINU.Controllers
                     //return BadRequest("There is no class with id = " + id);
                     return NotFound("No students in this class.");
                 }
-            } else
+            }
+            else
+            {
+                return NotFound($"Class with id {classId} not found.");
+            }
+        }
+
+        [HttpGet("{classId}/GradesDetailed")]
+        public IActionResult GetGradesByClassId(int classId)
+        {
+            if (classesRepository.GetClassById(classId) != null)
+            {
+                var gradesList = subjectsClassRepository.GetSubjectClassByClassId(classId).ConvertAll(s => mapper.Map<GradesPerSubjectDTO>(s));
+
+
+                var subjectsClass = subjectsClassRepository.GetSubjectClassByClassId(classId);
+                if (subjectsClass.Count > 0)
+                {
+                    var students = studentsRepository.GetStudentsByClassId(classId);
+                    if (students.Count > 0)
+                    {
+                        foreach (var subjectClass in subjectsClass)
+                        {
+                            gradesList.Find(x => x.SubjectId == subjectClass.SubjectId)
+                                        .Students = students.ConvertAll(s => mapper.Map<StudentGradesDTO>(s));
+                            foreach (Student student in students)
+                            {
+                                List<GradeInfo> grades = gradesRepository.GetGradesPerSubjectByStudentId(student.Id, subjectClass.SubjectId);
+                                if (grades.Count > 0)
+                                {
+                                    gradesList.Find(x => x.SubjectId == subjectClass.SubjectId)
+                                        .Students.Find(s => s.StudentId == student.Id)
+                                        .Grades.AddRange(grades.ConvertAll(s => mapper.Map<GradeMinimalisticDTO>(s)));
+                                }
+                            }
+                        }
+                    }
+                    return Ok(gradesList);
+                }
+                else
+                {
+                    //return BadRequest("There is no class with id = " + id);
+                    return NotFound("No students in this class.");
+                }
+            }
+            else
+            {
+                return NotFound($"Class with id {classId} not found.");
+            }
+        }
+
+
+        [HttpGet("{classId}/Grades")]
+        public IActionResult GetGradessByClassId(int classId)
+        {
+            if (classesRepository.GetClassById(classId) != null)
+            {
+                var gradesList = new List<GradeInfoDTO>();
+
+
+                var subjectsClass = subjectsClassRepository.GetSubjectClassByClassId(classId);
+                if (subjectsClass.Count > 0)
+                {
+                    var students = studentsRepository.GetStudentsByClassId(classId);
+                    if (students.Count > 0)
+                    {
+                        foreach (var subjectClass in subjectsClass)
+                        {
+                            foreach (Student student in students)
+                            {
+                                //List<GradeInfo> grades = gradesRepository.GetGradesPerSubjectByStudentId(student.Id, subjectClass.SubjectId);
+                                //if (grades.Count > 0)
+                                //{
+                                //    gradesList.Find(x => x.SubjectId == subjectClass.SubjectId).Grades.AddRange(grades.ConvertAll(s => mapper.Map<GradeInfoDTO>(s)));
+                                //}
+                                gradesList.AddRange(gradesRepository.GetGradesPerSubjectByStudentId(student.Id, subjectClass.SubjectId).ConvertAll(s => mapper.Map<GradeInfoDTO>(s)));
+                            }
+                        }
+                    }
+                    return Ok(gradesList);
+                }
+                else
+                {
+                    //return BadRequest("There is no class with id = " + id);
+                    return NotFound("No students in this class.");
+                }
+            }
+            else
             {
                 return NotFound($"Class with id {classId} not found.");
             }
